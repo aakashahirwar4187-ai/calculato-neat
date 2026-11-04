@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Free online calculators for finance, health, math, science and everyday conversions.">
+<meta name="theme-color" content="#fff">
+<title>Calculato.Neat — Free Online Calculators</title>
+<style>
+:root{--blue:#1769aa;--navy:#17324d;--ink:#263442;--muted:#667788;--line:#d9e1e8;--bg:#f5f7f9;--pale:#eaf3fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Arial,Helvetica,sans-serif}
+a{color:var(--blue);text-decoration:none}.wrap{max-width:1160px;margin:auto;padding:0 18px}
+header{background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.head{display:flex;align-items:center;gap:24px;min-height:66px}.brand{font-size:24px;font-weight:800;color:var(--navy);white-space:nowrap}.brand span{color:var(--blue)}
+nav{display:flex;gap:18px;flex-wrap:wrap;font-size:14px}nav a{color:#34495e}
+.hero{background:#fff;border-bottom:1px solid var(--line);padding:22px 0 18px}
+h1{font-size:25px;margin:0 0 6px;color:#23384c}.sub{margin:0 0 15px;color:var(--muted)}
+.search{display:flex;max-width:700px}.search input{flex:1;min-width:0;padding:12px;border:1px solid #b9c7d3;border-radius:5px 0 0 5px;font-size:16px}.search button,.blue{background:var(--blue);color:white;border:0;padding:0 22px;border-radius:0 5px 5px 0;font-weight:700}
+main{padding:20px 0 40px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:20px;align-items:start}
+.panel{background:white;border:1px solid var(--line);border-radius:5px;margin-bottom:18px;overflow:hidden}
+.panel h2{font-size:18px;margin:0;padding:11px 14px;background:#f0f4f7;border-bottom:1px solid var(--line);color:#263d52}
+.panelbody{padding:14px}
+.quickcalc{max-width:430px;margin:auto;border:1px solid #cbd5df;border-radius:6px;padding:12px;background:#fbfcfd}
+.display{width:100%;font-size:25px;text-align:right;padding:12px;border:1px solid #b9c6d2;border-radius:4px;margin-bottom:9px;background:white}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.keys button{padding:13px 4px;font-size:17px;border:1px solid #c8d2dc;border-radius:4px;background:#f1f4f7;color:#24384b}.keys button.op{background:#e5f0fa}.keys button.equal{background:var(--blue);color:white}
+.cats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.catbox{border:1px solid var(--line);border-radius:5px;background:white}.catbox h3{margin:0;padding:10px 12px;background:#edf3f8;color:#24445f;border-bottom:1px solid var(--line);font-size:16px}
+.toolgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:8px 12px;gap:2px 12px}
+.tool{display:block;text-align:left;background:none;border:0;border-bottom:1px dotted #e1e6eb;padding:6px 0;color:#1769aa;font-size:13px;cursor:pointer}.tool:hover{text-decoration:underline;color:#0e4777}
+.sidebar .panelbody{font-size:13px;color:#526273}.calcform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.calcform label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:#4e5d6c}.calcform input,.calcform select{width:100%;padding:10px;border:1px solid #c8d2dc;border-radius:4px;font-size:15px}
+.actions{display:flex;gap:8px;margin-top:12px}.actions button{padding:10px 17px;border:0;border-radius:4px;background:var(--blue);color:white;font-weight:700}.actions .secondary{background:#e8edf2;color:#31465a}
+.result{margin-top:13px;padding:12px;background:#eef6fd;border:1px solid #c9dff1;border-radius:4px;white-space:pre-wrap;font-weight:600}
+.hidden{display:none!important}.small{font-size:12px;color:var(--muted)}footer{padding:25px 0;color:#6b7885;text-align:center;font-size:12px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.sidebar .panel{margin:0}}
+@media(max-width:600px){.head{align-items:flex-start;flex-direction:column;gap:5px;padding:10px 0}.cats{grid-template-columns:1fr}.toolgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.sidebar{display:block}.sidebar .panel{margin-bottom:12px}.calcform{grid-template-columns:1fr}h1{font-size:22px}}
+</style></head>
+<body>
+<header><div class="wrap head"><a class="brand" href="#">Calculato<span>.Neat</span></a><nav><a href="#all">All Calculators</a><a href="#financial">Financial</a><a href="#health">Fitness & Health</a><a href="#math">Math</a><a href="#other">Other</a></nav></div></header>
+<section class="hero"><div class="wrap"><h1>Free Online Calculators</h1><p class="sub">Fast, simple calculators for finance, health, math and everyday life.</p><div class="search"><input id="search" placeholder="Search calculators..." aria-label="Search calculators"><button id="searchBtn">Search</button></div></div></section>
+<main class="wrap"><div class="layout"><div>
+<section class="panel"><h2>Standard Calculator</h2><div class="panelbody"><div class="quickcalc"><input id="display" class="display" value="0" readonly><div class="keys" id="keys"></div><p class="small">Basic arithmetic calculator. Use the keypad or your device keyboard.</p></div></div></section>
+<section id="calcPanel" class="panel hidden"><h2 id="calcTitle">Calculator</h2><div class="panelbody"><div id="calcDescription" class="small"></div><div id="calcForm" class="calcform"></div><div class="actions"><button id="runCalc">Calculate</button><button class="secondary" id="clearCalc">Clear</button></div><div id="calcResult"></div></div></section>
+<section class="panel" id="all"><h2 id="listTitle">All Calculators (200)</h2><div class="panelbody"><div class="cats" id="categories"></div></div></section>
+</div><aside class="sidebar"><section class="panel"><h2>Popular Calculators</h2><div class="panelbody" id="popular"></div></section><section class="panel"><h2>About Calculato.Neat</h2><div class="panelbody">Free online calculation tools. Results are estimates where assumptions or local rules apply. Check financial, tax and health decisions with a qualified professional.</div></section></aside></div></main>
+<footer><div class="wrap">© 2026 Calculato.Neat · Independent calculator tools · Not affiliated with Calculator.net</div></footer>
+<script>
+const tools=[{"name": "Mortgage Calculator", "cat": "Financial", "family": "loan"}, {"name": "Loan Calculator", "cat": "Financial", "family": "loan"}, {"name": "Auto Loan Calculator", "cat": "Financial", "family": "loan"}, {"name": "Interest Calculator", "cat": "Financial", "family": "interest"}, {"name": "Payment Calculator", "cat": "Financial", "family": "loan"}, {"name": "Retirement Calculator", "cat": "Financial", "family": "retirement"}, {"name": "Amortization Calculator", "cat": "Financial", "family": "loan"}, {"name": "Investment Calculator", "cat": "Financial", "family": "investment"}, {"name": "Inflation Calculator", "cat": "Financial", "family": "inflation"}, {"name": "Finance Calculator", "cat": "Financial", "family": "loan"}, {"name": "Income Tax Calculator", "cat": "Financial", "family": "tax"}, {"name": "Compound Interest Calculator", "cat": "Financial", "family": "compound"}, {"name": "Salary Calculator", "cat": "Financial", "family": "salary"}, {"name": "Interest Rate Calculator", "cat": "Financial", "family": "interest_rate"}, {"name": "Sales Tax Calculator", "cat": "Financial", "family": "tax_sales"}, {"name": "Credit Card Calculator", "cat": "Financial", "family": "loan"}, {"name": "Payoff Calculator", "cat": "Financial", "family": "loan"}, {"name": "Personal Loan Calculator", "cat": "Financial", "family": "loan"}, {"name": "Student Loan Calculator", "cat": "Financial", "family": "loan"}, {"name": "Home Loan Calculator", "cat": "Financial", "family": "loan"}, {"name": "Mortgage Payoff Calculator", "cat": "Financial", "family": "loan"}, {"name": "Refinance Calculator", "cat": "Financial", "family": "loan"}, {"name": "Down Payment Calculator", "cat": "Financial", "family": "percent"}, {"name": "Rent vs Buy Calculator", "cat": "Financial", "family": "rentbuy"}, {"name": "Savings Calculator", "cat": "Financial", "family": "compound"}, {"name": "Simple Interest Calculator", "cat": "Financial", "family": "interest"}, {"name": "Present Value Calculator", "cat": "Financial", "family": "present"}, {"name": "Future Value Calculator", "cat": "Financial", "family": "compound"}, {"name": "Net Worth Calculator", "cat": "Financial", "family": "networth"}, {"name": "Budget Calculator", "cat": "Financial", "family": "budget"}, {"name": "Debt-to-Income Ratio Calculator", "cat": "Financial", "family": "ratio"}, {"name": "Debt Payoff Calculator", "cat": "Financial", "family": "loan"}, {"name": "APR Calculator", "cat": "Financial", "family": "apr"}, {"name": "APY Calculator", "cat": "Financial", "family": "apy"}, {"name": "ROI Calculator", "cat": "Financial", "family": "roi"}, {"name": "Profit Margin Calculator", "cat": "Financial", "family": "margin"}, {"name": "Markup Calculator", "cat": "Financial", "family": "margin"}, {"name": "Break-Even Calculator", "cat": "Financial", "family": "breakeven"}, {"name": "Business Loan Calculator", "cat": "Financial", "family": "loan"}, {"name": "Commercial Loan Calculator", "cat": "Financial", "family": "loan"}, {"name": "Lease Calculator", "cat": "Financial", "family": "lease"}, {"name": "Auto Lease Calculator", "cat": "Financial", "family": "lease"}, {"name": "Car Depreciation Calculator", "cat": "Financial", "family": "depreciation"}, {"name": "Vehicle Tax Calculator", "cat": "Financial", "family": "tax_sales"}, {"name": "Sales Commission Calculator", "cat": "Financial", "family": "commission"}, {"name": "Hourly to Salary Calculator", "cat": "Financial", "family": "salary"}, {"name": "Overtime Calculator", "cat": "Financial", "family": "overtime"}, {"name": "Take-Home Pay Calculator", "cat": "Financial", "family": "salary"}, {"name": "Paycheck Calculator", "cat": "Financial", "family": "salary"}, {"name": "Hourly Pay Calculator", "cat": "Financial", "family": "salary"}, {"name": "Tip Calculator", "cat": "Financial", "family": "tip"}, {"name": "Discount Calculator", "cat": "Financial", "family": "discount"}, {"name": "Percentage Increase Calculator", "cat": "Financial", "family": "percent"}, {"name": "Currency Gain Calculator", "cat": "Financial", "family": "roi"}, {"name": "Stock Calculator", "cat": "Financial", "family": "investment"}, {"name": "Dividend Calculator", "cat": "Financial", "family": "investment"}, {"name": "Bond Yield Calculator", "cat": "Financial", "family": "bond"}, {"name": "CD Calculator", "cat": "Financial", "family": "compound"}, {"name": "Savings Goal Calculator", "cat": "Financial", "family": "savingsgoal"}, {"name": "Emergency Fund Calculator", "cat": "Financial", "family": "savingsgoal"}, {"name": "Required Minimum Distribution Calculator", "cat": "Financial", "family": "retirement"}, {"name": "Pension Calculator", "cat": "Financial", "family": "retirement"}, {"name": "401k Calculator", "cat": "Financial", "family": "retirement"}, {"name": "IRA Calculator", "cat": "Financial", "family": "retirement"}, {"name": "Social Security Calculator", "cat": "Financial", "family": "retirement"}, {"name": "Annuity Calculator", "cat": "Financial", "family": "annuity"}, {"name": "Loan Comparison Calculator", "cat": "Financial", "family": "loan"}, {"name": "Extra Payment Calculator", "cat": "Financial", "family": "loan"}, {"name": "Mortgage Points Calculator", "cat": "Financial", "family": "mortgagepoints"}, {"name": "House Affordability Calculator", "cat": "Financial", "family": "affordability"}, {"name": "Property Tax Calculator", "cat": "Financial", "family": "tax_sales"}, {"name": "Rental Yield Calculator", "cat": "Financial", "family": "yield"}, {"name": "Capital Gains Calculator", "cat": "Financial", "family": "capitalgains"}, {"name": "VAT Calculator", "cat": "Financial", "family": "tax_sales"}, {"name": "GST Calculator", "cat": "Financial", "family": "tax_sales"}, {"name": "Sales Tax Calculator (Reverse)", "cat": "Financial", "family": "tax_sales"}, {"name": "Inflation Rate Calculator", "cat": "Financial", "family": "inflation"}, {"name": "Rule of 72 Calculator", "cat": "Financial", "family": "rule72"}, {"name": "Compound Annual Growth Rate Calculator", "cat": "Financial", "family": "cagr"}, {"name": "Average Return Calculator", "cat": "Financial", "family": "investment"}, {"name": "Portfolio Allocation Calculator", "cat": "Financial", "family": "allocation"}, {"name": "Crypto Profit Calculator", "cat": "Financial", "family": "roi"}, {"name": "Bitcoin Investment Calculator", "cat": "Financial", "family": "investment"}, {"name": "Cost of Living Calculator", "cat": "Financial", "family": "inflation"}, {"name": "Net Income Calculator", "cat": "Financial", "family": "salary"}, {"name": "Gross-Up Calculator", "cat": "Financial", "family": "salary"}, {"name": "Bonus Calculator", "cat": "Financial", "family": "salary"}, {"name": "Commission Calculator", "cat": "Financial", "family": "commission"}, {"name": "Business Valuation Calculator", "cat": "Financial", "family": "valuation"}, {"name": "Cash Flow Calculator", "cat": "Financial", "family": "cashflow"}, {"name": "Working Capital Calculator", "cat": "Financial", "family": "cashflow"}, {"name": "Current Ratio Calculator", "cat": "Financial", "family": "ratio"}, {"name": "Quick Ratio Calculator", "cat": "Financial", "family": "ratio"}, {"name": "Debt Service Coverage Ratio Calculator", "cat": "Financial", "family": "ratio"}, {"name": "Gross Profit Calculator", "cat": "Financial", "family": "margin"}, {"name": "Operating Margin Calculator", "cat": "Financial", "family": "margin"}, {"name": "EBITDA Calculator", "cat": "Financial", "family": "ebitda"}, {"name": "Markup and Margin Calculator", "cat": "Financial", "family": "margin"}, {"name": "Price per Unit Calculator", "cat": "Financial", "family": "unitprice"}, {"name": "Break-Even Point Calculator", "cat": "Financial", "family": "breakeven"}, {"name": "Loan-to-Value Calculator", "cat": "Financial", "family": "ratio"}, {"name": "Mortgage Insurance Calculator", "cat": "Financial", "family": "mortgageinsurance"}, {"name": "Home Equity Calculator", "cat": "Financial", "family": "homeequity"}, {"name": "Closing Costs Calculator", "cat": "Financial", "family": "closingcosts"}, {"name": "Biweekly Mortgage Calculator", "cat": "Financial", "family": "loan"}, {"name": "BMI Calculator", "cat": "Fitness & Health", "family": "bmi"}, {"name": "Calorie Calculator", "cat": "Fitness & Health", "family": "calorie"}, {"name": "Body Fat Calculator", "cat": "Fitness & Health", "family": "bodyfat"}, {"name": "BMR Calculator", "cat": "Fitness & Health", "family": "bmr"}, {"name": "Ideal Weight Calculator", "cat": "Fitness & Health", "family": "idealweight"}, {"name": "Pace Calculator", "cat": "Fitness & Health", "family": "pace"}, {"name": "Pregnancy Calculator", "cat": "Fitness & Health", "family": "pregnancy"}, {"name": "Pregnancy Conception Calculator", "cat": "Fitness & Health", "family": "pregnancy"}, {"name": "Due Date Calculator", "cat": "Fitness & Health", "family": "pregnancy"}, {"name": "TDEE Calculator", "cat": "Fitness & Health", "family": "calorie"}, {"name": "Lean Body Mass Calculator", "cat": "Fitness & Health", "family": "bodyfat"}, {"name": "Healthy Weight Calculator", "cat": "Fitness & Health", "family": "idealweight"}, {"name": "Waist-to-Height Ratio Calculator", "cat": "Fitness & Health", "family": "ratio"}, {"name": "Waist-to-Hip Ratio Calculator", "cat": "Fitness & Health", "family": "ratio"}, {"name": "Army Body Fat Calculator", "cat": "Fitness & Health", "family": "bodyfat"}, {"name": "One Rep Max Calculator", "cat": "Fitness & Health", "family": "onerep"}, {"name": "Calories Burned Calculator", "cat": "Fitness & Health", "family": "caloriesburned"}, {"name": "Macro Calculator", "cat": "Fitness & Health", "family": "macros"}, {"name": "Protein Intake Calculator", "cat": "Fitness & Health", "family": "macros"}, {"name": "Water Intake Calculator", "cat": "Fitness & Health", "family": "water"}, {"name": "Ideal Weight Calculator (Devine)", "cat": "Fitness & Health", "family": "idealweight"}, {"name": "Ovulation Calculator", "cat": "Fitness & Health", "family": "pregnancy"}, {"name": "Period Calculator", "cat": "Fitness & Health", "family": "pregnancy"}, {"name": "Sleep Calculator", "cat": "Fitness & Health", "family": "sleep"}, {"name": "Heart Rate Calculator", "cat": "Fitness & Health", "family": "heartrate"}, {"name": "Target Heart Rate Calculator", "cat": "Fitness & Health", "family": "heartrate"}, {"name": "Blood Alcohol Calculator", "cat": "Fitness & Health", "family": "bac"}, {"name": "Child BMI Calculator", "cat": "Fitness & Health", "family": "bmi"}, {"name": "Weight Loss Calculator", "cat": "Fitness & Health", "family": "weightloss"}, {"name": "Running Pace Calculator", "cat": "Fitness & Health", "family": "pace"}, {"name": "Walking Calories Calculator", "cat": "Fitness & Health", "family": "caloriesburned"}, {"name": "Body Surface Area Calculator", "cat": "Fitness & Health", "family": "bsa"}, {"name": "Blood Pressure Calculator", "cat": "Fitness & Health", "family": "ratio"}, {"name": "Body Shape Calculator", "cat": "Fitness & Health", "family": "ratio"}, {"name": "Calorie Deficit Calculator", "cat": "Fitness & Health", "family": "weightloss"}, {"name": "Fat Intake Calculator", "cat": "Fitness & Health", "family": "macros"}, {"name": "Carbohydrate Calculator", "cat": "Fitness & Health", "family": "macros"}, {"name": "BMI Prime Calculator", "cat": "Fitness & Health", "family": "bmi"}, {"name": "Waist Circumference Calculator", "cat": "Fitness & Health", "family": "ratio"}, {"name": "Scientific Calculator", "cat": "Math", "family": "scientific"}, {"name": "Fraction Calculator", "cat": "Math", "family": "fraction"}, {"name": "Percentage Calculator", "cat": "Math", "family": "percent"}, {"name": "Random Number Generator", "cat": "Math", "family": "random"}, {"name": "Triangle Calculator", "cat": "Math", "family": "triangle"}, {"name": "Standard Deviation Calculator", "cat": "Math", "family": "stats"}, {"name": "Average Calculator", "cat": "Math", "family": "stats"}, {"name": "Mean Median Mode Calculator", "cat": "Math", "family": "stats"}, {"name": "Variance Calculator", "cat": "Math", "family": "stats"}, {"name": "Probability Calculator", "cat": "Math", "family": "probability"}, {"name": "Permutation Calculator", "cat": "Math", "family": "permutation"}, {"name": "Combination Calculator", "cat": "Math", "family": "permutation"}, {"name": "Factorial Calculator", "cat": "Math", "family": "permutation"}, {"name": "Prime Number Calculator", "cat": "Math", "family": "prime"}, {"name": "GCF Calculator", "cat": "Math", "family": "gcf"}, {"name": "LCM Calculator", "cat": "Math", "family": "gcf"}, {"name": "Ratio Calculator", "cat": "Math", "family": "ratio"}, {"name": "Proportion Calculator", "cat": "Math", "family": "ratio"}, {"name": "Exponent Calculator", "cat": "Math", "family": "power"}, {"name": "Square Root Calculator", "cat": "Math", "family": "power"}, {"name": "Log Calculator", "cat": "Math", "family": "power"}, {"name": "Quadratic Formula Calculator", "cat": "Math", "family": "quadratic"}, {"name": "Slope Calculator", "cat": "Math", "family": "slope"}, {"name": "Distance Formula Calculator", "cat": "Math", "family": "distance"}, {"name": "Midpoint Calculator", "cat": "Math", "family": "midpoint"}, {"name": "Pythagorean Theorem Calculator", "cat": "Math", "family": "pythagorean"}, {"name": "Circle Calculator", "cat": "Math", "family": "circle"}, {"name": "Area Calculator", "cat": "Math", "family": "area"}, {"name": "Volume Calculator", "cat": "Math", "family": "volume"}, {"name": "Surface Area Calculator", "cat": "Math", "family": "volume"}, {"name": "Perimeter Calculator", "cat": "Math", "family": "area"}, {"name": "Rectangle Calculator", "cat": "Math", "family": "area"}, {"name": "Square Calculator", "cat": "Math", "family": "area"}, {"name": "Trapezoid Calculator", "cat": "Math", "family": "area"}, {"name": "Cylinder Calculator", "cat": "Math", "family": "volume"}, {"name": "Sphere Calculator", "cat": "Math", "family": "volume"}, {"name": "Cone Calculator", "cat": "Math", "family": "volume"}, {"name": "Pyramid Calculator", "cat": "Math", "family": "volume"}, {"name": "Polygon Calculator", "cat": "Math", "family": "area"}, {"name": "Scientific Notation Calculator", "cat": "Math", "family": "power"}, {"name": "Rounding Calculator", "cat": "Math", "family": "rounding"}, {"name": "Absolute Value Calculator", "cat": "Math", "family": "power"}, {"name": "Modular Arithmetic Calculator", "cat": "Math", "family": "modulo"}, {"name": "Number Base Converter", "cat": "Math", "family": "base"}, {"name": "Binary Calculator", "cat": "Math", "family": "base"}, {"name": "Hex Calculator", "cat": "Math", "family": "base"}, {"name": "Fraction Simplifier", "cat": "Math", "family": "fraction"}, {"name": "Mixed Number Calculator", "cat": "Math", "family": "fraction"}, {"name": "Percent Error Calculator", "cat": "Math", "family": "percent"}, {"name": "Percent Difference Calculator", "cat": "Math", "family": "percent"}, {"name": "Percentage Change Calculator", "cat": "Math", "family": "percent"}, {"name": "Matrix Calculator", "cat": "Math", "family": "matrix"}, {"name": "Sequence Calculator", "cat": "Math", "family": "sequence"}, {"name": "Arithmetic Sequence Calculator", "cat": "Math", "family": "sequence"}, {"name": "Geometric Sequence Calculator", "cat": "Math", "family": "sequence"}, {"name": "Standard Form Calculator", "cat": "Math", "family": "power"}];
+const categories=["Financial","Fitness & Health","Math","Other"];
+const $=id=>document.getElementById(id);
+let active=null;
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function render(list=tools){
+ $("categories").innerHTML=categories.map(cat=>`<section class="catbox" id="${cat==='Fitness & Health'?'health':cat.toLowerCase()}"><h3>${cat} Calculators</h3><div class="toolgrid">${list.filter(t=>t.cat===cat).map(t=>`<button class="tool" data-name="${esc(t.name)}">${esc(t.name)}</button>`).join("")||'<span class="small">No matching tools</span>'}</div></section>`).join("");
+ $("popular").innerHTML=tools.slice(0,10).map(t=>`<button class="tool" data-name="${esc(t.name)}">${esc(t.name)}</button>`).join("");
+}
+function fieldsFor(f){
+ const map={
+loan:[["principal","Loan amount",250000],["rate","Annual interest rate (%)",6.5],["years","Term (years)",30]],
+interest:[["principal","Principal",10000],["rate","Annual interest rate (%)",5],["years","Years",3]],
+compound:[["principal","Initial amount",1000],["rate","Annual rate (%)",5],["years","Years",10],["n","Compounds per year",12]],
+investment:[["principal","Initial investment",5000],["rate","Annual return (%)",7],["years","Years",10],["contribution","Annual contribution",0]],
+inflation:[["amount","Current amount",100],["rate","Inflation rate (%)",3],["years","Years",10]],
+tax:[["income","Annual taxable income",60000],["rate","Estimated tax rate (%)",20]],
+tax_sales:[["amount","Price before tax",100],["rate","Tax rate (%)",8]],
+salary:[["rate","Hourly wage",25],["hours","Hours per week",40],["weeks","Weeks per year",52]],
+percent:[["amount","Original value",100],["rate","Percentage (%)",15]],
+tip:[["amount","Bill amount",80],["rate","Tip (%)",18],["people","People",2]],
+discount:[["amount","Original price",100],["rate","Discount (%)",20]],
+bmi:[["weight","Weight (kg)",70],["height","Height (cm)",175]],
+calorie:[["weight","Weight (kg)",70],["height","Height (cm)",175],["age","Age",30]],
+bmr:[["weight","Weight (kg)",70],["height","Height (cm)",175],["age","Age",30]],
+bodyfat:[["weight","Weight (kg)",75],["height","Height (cm)",175],["waist","Waist (cm)",85]],
+idealweight:[["height","Height (cm)",175]],
+pace:[["distance","Distance (km)",5],["minutes","Time (minutes)",30]],
+pregnancy:[["date","First day of last period (YYYY-MM-DD)","2026-01-01"]],
+stats:[["values","Numbers (comma separated)","10,12,15,18,20"]],
+fraction:[["a","Numerator",1],["b","Denominator",2],["c","Second numerator",1],["d","Second denominator",3]],
+random:[["min","Minimum",1],["max","Maximum",100]],
+triangle:[["a","Side/base (m)",3],["b","Side/height (m)",4],["c","Third side (m)",5]],
+area:[["a","Length (m)",10],["b","Width (m)",5]],
+volume:[["a","Length/radius (m)",3],["b","Width (m)",4],["c","Height (m)",5]],
+circle:[["r","Radius",5]],
+age:[["date","Date of birth (YYYY-MM-DD)","2000-01-01"]],
+datediff:[["date","Start date (YYYY-MM-DD)","2026-01-01"],["date2","End date (YYYY-MM-DD)","2026-12-31"]],
+hours:[["a","Hours",8],["b","Minutes",30]],
+gpa:[["a","Grade points",3.5],["b","Credits",15]],
+grade:[["a","Points earned",85],["b","Points possible",100]],
+ratio:[["a","First value",2],["b","Second value",3]],
+breakeven:[["fixed","Fixed costs",10000],["price","Price per unit",50],["variable","Variable cost per unit",30]],
+roi:[["initial","Initial value",1000],["final","Final value",1250]],
+retirement:[["principal","Current savings",50000],["rate","Annual return (%)",6],["years","Years until retirement",20],["contribution","Annual contribution",6000]],
+present:[["amount","Future amount",10000],["rate","Annual discount rate (%)",5],["years","Years",5]],
+rentbuy:[["amount","Home price",300000],["rate","Mortgage rate (%)",6],["years","Years",30]],
+lease:[["amount","Vehicle price",35000],["rate","Annual rate (%)",5],["years","Lease term (years)",3]],
+depreciation:[["amount","Initial value",30000],["rate","Annual depreciation (%)",15],["years","Years",5]],
+yield:[["amount","Annual rent",24000],["rate","Property value",300000]],
+commission:[["amount","Sales amount",10000],["rate","Commission (%)",5]],
+bond:[["amount","Face value",1000],["rate","Annual coupon (%)",5],["years","Years to maturity",10]],
+annuity:[["amount","Payment per period",1000],["rate","Annual rate (%)",5],["years","Years",10]],
+rule72:[["rate","Annual interest rate (%)",6]],
+cagr:[["initial","Beginning value",1000],["final","Ending value",2000],["years","Years",5]],
+allocation:[["a","Stocks (%)",60],["b","Bonds (%)",30],["c","Cash (%)",10]],
+cashflow:[["a","Current assets",50000],["b","Current liabilities",25000]],
+margin:[["amount","Selling price",100],["cost","Cost",60]],
+ebitda:[["a","Operating income",100000],["b","Depreciation",10000],["c","Amortization",5000]],
+unitprice:[["amount","Total price",12],["quantity","Quantity",4]],
+mortgageinsurance:[["amount","Home price",300000],["down","Down payment",30000],["rate","Annual PMI rate (%)",0.5]],
+homeequity:[["amount","Home value",300000],["debt","Mortgage balance",200000]],
+closingcosts:[["amount","Home price",300000],["rate","Closing cost (%)",3]],
+onerep:[["weight","Lifted weight (kg)",80],["reps","Repetitions",8]],
+macros:[["weight","Weight (kg)",70],["calories","Daily calories",2200]],
+water:[["weight","Weight (kg)",70]],
+sleep:[["age","Age",30]],
+heartrate:[["age","Age",30]],
+weightloss:[["weight","Weight (kg)",80],["deficit","Daily calorie deficit",500]],
+bsa:[["weight","Weight (kg)",70],["height","Height (cm)",175]],
+caloriesburned:[["weight","Weight (kg)",70],["minutes","Exercise minutes",30]],
+probability:[["a","Favourable outcomes",1],["b","Total outcomes",6]],
+permutation:[["a","Total items (n)",5],["b","Selected items (r)",2]],
+prime:[["a","Integer",97]],
+gcf:[["a","First integer",24],["b","Second integer",36]],
+power:[["a","Base",2],["b","Exponent",8]],
+quadratic:[["a","Coefficient a",1],["b","Coefficient b",-5],["c","Coefficient c",6]],
+slope:[["a","x1",1],["b","y1",2],["c","x2",4],["d","y2",8]],
+distance:[["a","x1",0],["b","y1",0],["c","x2",3],["d","y2",4]],
+midpoint:[["a","x1",0],["b","y1",0],["c","x2",4],["d","y2",6]],
+pythagorean:[["a","Side A",3],["b","Side B",4]],
+rounding:[["a","Number",3.14159],["b","Decimal places",2]],
+modulo:[["a","Dividend",17],["b","Divisor",5]],
+base:[["a","Number (decimal)",255]],
+sequence:[["a","First term",2],["b","Common difference/ratio",3],["c","Number of terms",5]],
+zscore:[["a","Value",80],["b","Mean",70],["c","Standard deviation",10]],
+confidence:[["a","Sample mean",50],["b","Std deviation",10],["c","Sample size",100]],
+density:[["a","Mass (kg)",10],["b","Volume (m³)",2]],
+speed:[["a","Distance (km)",100],["b","Time (hours)",2]],
+physics:[["a","Mass",10],["b","Acceleration / height",9.8]],
+ohms:[["a","Voltage (V)",12],["b","Resistance (Ω)",4]],
+wave:[["a","Wave speed (m/s)",340],["b","Frequency (Hz)",440]],
+mpg:[["a","Distance (miles)",300],["b","Fuel (gallons)",10]],
+fuel:[["a","Distance",300],["b","Fuel efficiency",30],["c","Fuel price",3.5]],
+temperature:[["a","Temperature",0]],
+convert:[["a","Value",1]],
+concrete:[["a","Length (m)",4],["b","Width (m)",3],["c","Depth (m)",0.1]],
+stairs:[["a","Total rise (cm)",280],["b","Riser height (cm)",18]],
+recipe:[["a","Original servings",4],["b","New servings",6]],
+dogage:[["age","Pet age in years",5]],
+screen:[["a","Diagonal (inches)",55],["b","Aspect ratio width",16],["c","Aspect ratio height",9]],
+bandwidth:[["a","File size (MB)",100],["b","Speed (Mbps)",50]],
+scale:[["a","Map distance (cm)",5],["b","Scale denominator",50000]],
+electricity:[["a","Power (kW)",1.5],["b","Hours per day",5],["c","Price per kWh",0.15]],
+businessdays:[["date","Start date (YYYY-MM-DD)","2026-01-01"],["date2","End date (YYYY-MM-DD)","2026-01-31"]],
+dateadd:[["date","Start date (YYYY-MM-DD)","2026-01-01"],["a","Days to add",30]],
+timestamp:[["date","Date/time (YYYY-MM-DD)","2026-01-01"]],
+timezone:[["a","UTC offset hours",0]],
+roman:[["a","Number (1–3999)",2026]],
+subnet:[["a","IPv4 address (e.g. 192.168.1.10)","192.168.1.10"],["b","CIDR prefix (0–32)",24]],
+password:[["a","Password length",16]],
+scientific:[["a","Number",2],["b","Second number",3]]
+ };
+ return map[f]||map.scientific;
+}
+function openTool(name){
+ active=tools.find(t=>t.name===name);if(!active)return;
+ $("calcTitle").textContent=active.name;$("calcDescription").textContent=active.cat+" calculator · Enter values and calculate.";
+ $("calcForm").innerHTML=fieldsFor(active.family).map(([id,label,val])=>`<label>${label}<input id="f_${id}" ${id==="date"||id==="date2"?"type=date":id==="a"&&typeof val==="string"?"type=text":"type=number"} step="any" value="${val}"></label>`).join("");
+ $("calcResult").innerHTML="";$("calcPanel").classList.remove("hidden");$("calcPanel").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function v(id){let el=$("f_"+id);if(!el)return 0;return el.type==="text"||el.type==="date"?el.value:Number(el.value)}
+function out(s){$("calcResult").innerHTML=`<div class="result">${s}</div>`}
+function calc(){
+ const f=active.family, a=v("a"),b=v("b"),c=v("c"),d=v("d"),p=v("principal"),rate=v("rate")/100,years=v("years"),n=v("n")||12,amount=v("amount"),cost=v("cost");
+ let r="",fmt=x=>Number(x).toLocaleString(undefined,{maximumFractionDigits:2});
+ switch(f){
+ case"loan":{let m=rate/12,nn=years*12,pmt=m===0?p/nn:p*m/(1-Math.pow(1+m,-nn));r=`Monthly payment: ${fmt(pmt)} · Total paid: ${fmt(pmt*nn)} · Interest: ${fmt(pmt*nn-p)}`;break}
+ case"interest":r=`Simple interest: ${fmt(p*rate*years)} · Total: ${fmt(p*(1+rate*years))}`;break;
+ case"compound":case"investment":case"retirement":{let fv=p*Math.pow(1+rate,n*years)+(v("contribution")||0)*(Math.pow(1+rate,years)-1)/(rate||1);r=`Estimated future value: ${fmt(fv)} · Growth above starting amount: ${fmt(fv-p)}`;break}
+ case"present":r=`Present value: ${fmt(v("amount")/Math.pow(1+rate,years))}`;break;
+ case"inflation":r=`Future equivalent cost: ${fmt(amount*Math.pow(1+rate,years))} · Purchasing power of ${fmt(amount)} today after ${years} years: ${fmt(amount/Math.pow(1+rate,years))}`;break;
+ case"tax":r=`Estimated tax: ${fmt(v("income")*v("rate")/100)} · After-tax income: ${fmt(v("income")*(1-v("rate")/100))}. Flat-rate estimate only; not jurisdiction-specific.`;break;
+ case"tax_sales":r=`Tax: ${fmt(amount*rate)} · Total including tax: ${fmt(amount*(1+rate))}`;break;
+ case"salary":r=`Estimated gross annual pay: ${fmt(v("rate")*v("hours")*v("weeks"))} · Monthly average: ${fmt(v("rate")*v("hours")*v("weeks")/12)}`;break;
+ case"percent":r=`${v("rate")}% of ${fmt(amount)} = ${fmt(amount*rate)} · New value after increase: ${fmt(amount*(1+rate))}`;break;
+ case"tip":r=`Tip: ${fmt(amount*rate)} · Total: ${fmt(amount*(1+rate))} · Per person: ${fmt(amount*(1+rate)/(v("people")||1))}`;break;
+ case"discount":r=`You save: ${fmt(amount*rate)} · Sale price: ${fmt(amount*(1-rate))}`;break;
+ case"bmi":{let bmi=v("weight")/Math.pow(v("height")/100,2);r=`BMI: ${fmt(bmi)} · ${bmi<18.5?"Below standard adult reference range":bmi<25?"Within standard adult reference range":bmi<30?"Above standard adult reference range":"High adult BMI range"}. Screening only, not diagnosis.`;break}
+ case"bmr":case"calorie":{let bmr=10*v("weight")+6.25*v("height")-5*v("age")-161;r=`Estimated BMR (female Mifflin-St Jeor): ${fmt(bmr)} kcal/day. TDEE requires activity level; estimate only.`;break}
+ case"bodyfat":r=`Rough waist/height indicator: ${fmt(v("waist")/v("height"))}. This is not a validated body-fat percentage; use a clinically appropriate method.`;break;
+ case"idealweight":r=`Approximate Devine ideal body weight (male reference): ${fmt(50+2.3*((v("height")/2.54)-60))} kg. Formula is a rough reference.`;break;
+ case"pace":r=`Pace: ${fmt(v("minutes")/v("distance"))} minutes/km · Speed: ${fmt(v("distance")/(v("minutes")/60))} km/h`;break;
+ case"pregnancy":{let dt=new Date(v("date")+"T00:00:00");dt.setDate(dt.getDate()+280);r=`Estimated due date (280 days after entered date): ${dt.toLocaleDateString()}. Not a clinical dating method.`;break}
+ case"stats":{let xs=String(v("values")).split(",").map(Number).filter(Number.isFinite),mean=xs.reduce((x,y)=>x+y,0)/xs.length,sd=Math.sqrt(xs.reduce((s,x)=>s+(x-mean)**2,0)/xs.length);r=`Count: ${xs.length} · Mean: ${fmt(mean)} · Population standard deviation: ${fmt(sd)} · Min: ${fmt(Math.min(...xs))} · Max: ${fmt(Math.max(...xs))}`;break}
+ case"fraction":{let x=v("a")/v("b"),y=v("c")/v("d");r=`Sum: ${fmt(x+y)} · Difference: ${fmt(x-y)} · Product: ${fmt(x*y)} · Quotient: ${fmt(x/y)}`;break}
+ case"random":r=`Random integer: ${Math.floor(Math.random()*(v("max")-v("min")+1))+v("min")}`;break;
+ case"triangle":{let s=(a+b+c)/2,area=Math.sqrt(Math.max(0,s*(s-a)*(s-b)*(s-c)));r=`Perimeter: ${fmt(a+b+c)} · Heron's area: ${fmt(area)} square units`;break}
+ case"area":r=`Rectangle area: ${fmt(a*b)} · Perimeter: ${fmt(2*(a+b))}`;break;
+ case"circle":r=`Area: ${fmt(Math.PI*v("r")**2)} · Circumference: ${fmt(2*Math.PI*v("r"))}`;break;
+ case"volume":r=`Rectangular volume: ${fmt(a*b*c)} cubic units`;break;
+ case"age":{let dob=new Date(v("date")+"T00:00:00"),now=new Date(),yrs=now.getFullYear()-dob.getFullYear();if(new Date(now.getFullYear(),dob.getMonth(),dob.getDate())>now)yrs--;r=`Age: ${yrs} years (calendar-year estimate)`;break}
+ case"datediff":{let x=new Date(v("date")+"T00:00:00"),y=new Date(v("date2")+"T00:00:00");r=`Difference: ${Math.abs(Math.round((y-x)/86400000))} days`;break}
+ case"hours":r=`Total time: ${fmt(a+b/60)} decimal hours · ${Math.floor(a+b/60)} hours ${Math.round((a+b/60-Math.floor(a+b/60))*60)} minutes`;break;
+ case"gpa":r=`GPA: ${fmt(a)} (weighted points input ${fmt(a*b)}). Enter a GPA directly; grading scales vary.`;break;
+ case"grade":r=`Percentage: ${fmt(a/b*100)}%`;break;
+ case"ratio":r=`Ratio: ${fmt(a)} : ${fmt(b)} · A/B: ${fmt(a/b)}`;break;
+ case"breakeven":r=`Break-even quantity: ${fmt(v("fixed")/(v("price")-v("variable")))} units`;break;
+ case"roi":r=`Return: ${fmt(v("final")-v("initial"))} · ROI: ${fmt((v("final")-v("initial"))/v("initial")*100)}%`;break;
+ case"margin":r=`Profit: ${fmt(amount-cost)} · Margin: ${fmt((amount-cost)/amount*100)}% · Markup: ${fmt((amount-cost)/cost*100)}%`;break;
+ case"rule72":r=`Approximate doubling time: ${fmt(72/v("rate"))} years`;break;
+ case"cagr":r=`CAGR: ${fmt((Math.pow(v("final")/v("initial"),1/v("years"))-1)*100)}%`;break;
+ case"commission":r=`Commission: ${fmt(amount*rate)}`;break;
+ case"yield":r=`Gross rental yield: ${fmt(amount/v("rate")*100)}%`;break;
+ case"cashflow":r=`Working capital: ${fmt(a-b)} · Current ratio: ${fmt(a/b)}`;break;
+ case"ebitda":r=`EBITDA: ${fmt(a+b+c)}`;break;
+ case"unitprice":r=`Unit price: ${fmt(amount/v("quantity"))}`;break;
+ case"onerep":r=`Estimated 1RM (Epley): ${fmt(v("weight")*(1+v("reps")/30))} kg`;break;
+ case"macros":r=`Protein target (1.6 g/kg): ${fmt(v("weight")*1.6)} g/day · Calories entered: ${fmt(v("calories"))}`;break;
+ case"water":r=`General hydration estimate (30–35 ml/kg): ${fmt(v("weight")*30)}–${fmt(v("weight")*35)} ml/day. Individual needs vary.`;break;
+ case"sleep":r=`Typical adult sleep reference: 7–9 hours/night. Age ${v("age")} does not replace individualized advice.`;break;
+ case"heartrate":r=`Estimated max heart rate (220 − age): ${fmt(220-v("age"))} bpm · 50–85% range: ${fmt((220-v("age"))*.5)}–${fmt((220-v("age"))*.85)} bpm`;break;
+ case"probability":r=`Probability: ${fmt(a/b*100)}%`;break;
+ case"permutation":{let n=v("a"),k=v("b"),z=1;for(let i=0;i<k;i++)z*=n-i;r=`nPr: ${fmt(z)} · nCr: ${fmt(z/factorial(k))}`;break}
+ case"prime":{let n=v("a"),ok=n>1;for(let i=2;i<=Math.sqrt(n);i++)if(n%i===0)ok=false;r=`${n} is ${ok?"prime":"not prime"}`;break}
+ case"gcf":{let x=Math.abs(a),y=Math.abs(b);while(y)[x,y]=[y,x%y];r=`GCF: ${x} · LCM: ${Math.abs(a*b)/(x||1)}`;break}
+ case"power":r=`a^b = ${fmt(Math.pow(a,b))} · Square root of a (if a ≥ 0): ${a>=0?fmt(Math.sqrt(a)):"not real"}`;break;
+ case"quadratic":{let disc=b*b-4*a*c;r=disc<0?`No real roots; discriminant ${fmt(disc)}`:`Roots: ${fmt((-b+Math.sqrt(disc))/(2*a))} and ${fmt((-b-Math.sqrt(disc))/(2*a))}`;break}
+ case"slope":r=`Slope: ${fmt((v("d")-v("b"))/(v("c")-v("a")))} · y-intercept: ${fmt(v("b")-((v("d")-v("b"))/(v("c")-v("a")))*v("a"))}`;break;
+ case"distance":r=`Distance: ${fmt(Math.hypot(v("c")-v("a"),v("d")-v("b")))}`;break;
+ case"midpoint":r=`Midpoint: (${fmt((v("a")+v("c"))/2)}, ${fmt((v("b")+v("d"))/2)})`;break;
+ case"pythagorean":r=`Hypotenuse: ${fmt(Math.hypot(a,b))}`;break;
+ case"rounding":r=`Rounded: ${fmt(Number(a.toFixed(Math.max(0,Math.min(12,b)))))}`;break;
+ case"modulo":r=`Remainder: ${fmt(a%b)}`;break;
+ case"base":r=`Binary: ${Math.trunc(a).toString(2)} · Hex: ${Math.trunc(a).toString(16).toUpperCase()} · Octal: ${Math.trunc(a).toString(8)}`;break;
+ case"sequence":{let arr=Array.from({length:Math.min(100,Math.max(0,Math.floor(v("c"))))},(_,i)=>a+b*i);r=`Sequence: ${arr.join(", ")} · Sum: ${fmt(arr.reduce((x,y)=>x+y,0))}`;break}
+ case"zscore":r=`Z-score: ${fmt((a-b)/c)}`;break;
+ case"density":r=`Density: ${fmt(a/b)} kg/m³`;break;
+ case"speed":r=`Speed: ${fmt(v("a")/v("b"))} km/h`;break;
+ case"ohms":r=`Current: ${fmt(v("a")/v("b"))} A · Power: ${fmt(v("a")**2/v("b"))} W`;break;
+ case"wave":r=`Wavelength: ${fmt(v("a")/v("b"))} m`;break;
+ case"mpg":r=`Fuel economy: ${fmt(v("a")/v("b"))} MPG`;break;
+ case"fuel":r=`Fuel required: ${fmt(v("a")/v("b"))} · Fuel cost: ${fmt(v("a")/v("b")*v("c"))}`;break;
+ case"temperature":r=`${a}°C = ${fmt(a*9/5+32)}°F = ${fmt(a+273.15)} K`;break;
+ case"convert":r=`Value entered: ${fmt(a)}. Choose a dedicated unit pair for exact conversion; this generic entry preserves the input.`;break;
+ case"concrete":r=`Volume: ${fmt(a*b*c)} m³ · Add 5–10% extra for waste`;break;
+ case"stairs":r=`Estimated risers: ${Math.round(a/b)} · Actual riser height: ${fmt(a/Math.round(a/b))} cm`;break;
+ case"recipe":r=`Scale factor: ${fmt(a/b)} · Multiply each original ingredient by this factor`;break;
+ case"dogage":r=`Approximate human-age equivalent: ${v("age")<=2?v("age")*12:24+(v("age")-2)*4} years (rough rule; varies by breed)`;break;
+ case"screen":{let diag=v("a"),w=v("b"),h=v("c"),k=diag/Math.hypot(w,h);r=`Screen width: ${fmt(k*w)} in · Height: ${fmt(k*h)} in`;break}
+ case"bandwidth":r=`Approximate download time: ${fmt(v("a")*8/v("b"))} seconds (ideal Mbps, excluding overhead)`;break;
+ case"scale":r=`Ground distance: ${fmt(v("a")*v("b")/100)} metres`;break;
+ case"electricity":r=`Daily energy: ${fmt(a*b)} kWh · Daily cost: ${fmt(a*b*c)} · 30-day cost: ${fmt(a*b*c*30)}`;break;
+ case"businessdays":{let x=new Date(v("date")+"T00:00:00"),y=new Date(v("date2")+"T00:00:00"),n=0;for(let d=new Date(x);d<=y;d.setDate(d.getDate()+1))if(d.getDay()!=0&&d.getDay()!=6)n++;r=`Weekdays (excluding public holidays): ${n}`;break}
+ case"dateadd":{let dt=new Date(v("date")+"T00:00:00");dt.setDate(dt.getDate()+a);r=`Result date: ${dt.toLocaleDateString()}`;break}
+ case"timestamp":r=`Unix timestamp: ${Math.floor(new Date(v("date")+"T00:00:00").getTime()/1000)}`;break;
+ case"timezone":r=`UTC offset entered: ${a>=0?"+":""}${a}:00 hours. Convert using a named timezone for daylight-saving accuracy.`;break;
+ case"roman":{let n=Math.floor(a),res="",vals=[[1000,"M"],[900,"CM"],[500,"D"],[400,"CD"],[100,"C"],[90,"XC"],[50,"L"],[40,"XL"],[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];for(let [v,s] of vals)while(n>=v){res+=s;n-=v}r=`Roman numeral: ${res||"Enter 1–3999"}`;break}
+ case"subnet":r=`Subnet tool: IPv4/CIDR inputs received. For full network/broadcast calculations use a dedicated CIDR parser.`;break;
+ case"password":{let chars="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%";let len=Math.max(8,Math.min(64,Math.floor(a)));let pw="";for(let i=0;i<len;i++)pw+=chars[Math.floor(Math.random()*chars.length)];r=`Generated password: ${pw}`;break}
+ default:r=`Result: ${fmt(a+b)}`
+ }
+ if(!r||r.includes("NaN")||r.includes("Infinity"))r="Please check the inputs. Values must be valid and denominators cannot be zero.";
+ out(r);
+}
+function factorial(n){let r=1;for(let i=2;i<=n;i++)r*=i;return r}
+$("runCalc").addEventListener("click",calc);$("clearCalc").addEventListener("click",()=>{$("calcForm").querySelectorAll("input").forEach(x=>x.value="");$("calcResult").innerHTML=""});
+document.addEventListener("click",e=>{let b=e.target.closest("[data-name]");if(b)openTool(b.dataset.name)});
+function search(){let q=$("search").value.toLowerCase().trim(),filtered=tools.filter(t=>(t.name+" "+t.cat).toLowerCase().includes(q));$("listTitle").textContent=`Search Results (${filtered.length})`;render(filtered);$("all").scrollIntoView({behavior:"smooth"})}
+$("searchBtn").addEventListener("click",search);$("search").addEventListener("keydown",e=>{if(e.key==="Enter")search()});
+/* Top basic calculator */
+let expr="0",fresh=true;function show(){ $("display").value=expr}
+const keys=["C","⌫","%","÷","7","8","9","×","4","5","6","−","1","2","3","+","±","0",".","="];
+$("keys").innerHTML=keys.map(k=>`<button class="${["÷","×","−","+","="].includes(k)?"op ":""}${k==="="?"equal":""}" data-key="${k}">${k}</button>`).join("");
+$("keys").addEventListener("click",e=>{let k=e.target.dataset.key;if(!k)return;if(k==="C"){expr="0";fresh=true}else if(k==="⌫"){expr=expr.length>1?expr.slice(0,-1):"0"}else if(k==="="){try{let safe=expr.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-").replace(/%/g,"/100");if(!/^[0-9+\-*/(). ]+$/.test(safe))throw 0;expr=String(Function('"use strict";return ('+safe+')')());if(!Number.isFinite(Number(expr)))throw 0;fresh=true}catch{expr="Error"}}else if(k==="±"){expr=String(-Number(expr))}else{if(fresh&&/[0-9.]/.test(k))expr="";expr=(expr==="0"&&/[0-9.]/.test(k))?k:expr+k;fresh=false}show()});
+render();
+</script></body></html>
