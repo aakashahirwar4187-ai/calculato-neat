@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>World Calculators All in One - Free Online Tools</title>
+  
+  <!-- SEO Meta Tags -->
+  <title>World Calculators - Free Online Tools, Financial & Health Calculators</title>
+  <meta name="description" content="Free online calculators for finance, health, math, and more. 100% accurate and easy to use. Calculate EMI, BMI, Age, and 50+ tools in your browser." />
+  <meta name="keywords" content="online calculator, free calculator, financial calculator, BMI calculator, EMI calculator, age calculator" />
+  <meta name="author" content="World Calculators" />
+  <link rel="canonical" href="https://worldcalculators.pages.dev/" />
+  
+  <!-- Open Graph for Social Media -->
+  <meta property="og:title" content="World Calculators - Free Online Tools" />
+  <meta property="og:description" content="Fast, accurate, and free online calculators." />
+  <meta property="og:type" content="website" />
+  
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { 
-      --primary: #2563eb; --primary-dark: #1e40af; 
+      --primary: #1e40af; --primary-light: #2563eb; 
       --text: #111827; --text-muted: #6b7280; 
       --bg: #ffffff; --bg-alt: #f8fafc;
       --border: #e2e8f0; --radius: 8px; 
@@ -16,62 +28,87 @@
     body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
     a { color: #1e40af; text-decoration: none; cursor: pointer; }
     a:hover { text-decoration: underline; }
-    .container { width: 100%; max-width: 900px; margin: 0 auto; padding: 0 1rem; }
+    .container { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
     
     /* Header */
-    .site-header { background: #fff; border-bottom: 2px solid #1e40af; padding: 1rem 0; text-align: center; }
-    .logo { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1.5rem; font-weight: 800; color: var(--text); text-decoration: none; letter-spacing: -0.5px; }
-    .logo-icon { background: var(--primary); color: #fff; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 1.5rem; }
+    .site-header { background: var(--primary); color: #fff; padding: 0.75rem 0; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .menu-btn { background: none; border: none; color: #fff; font-size: 1.8rem; cursor: pointer; padding: 0 1rem; }
+    .logo-text { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; cursor: pointer; }
+    .logo-text span { color: #a3e635; }
+    .header-actions { padding: 0 1rem; display: flex; align-items: center; gap: 1rem; font-size: 0.9rem; }
+    .signin-btn { background: #fff; color: var(--primary); padding: 0.4rem 1rem; border-radius: 4px; font-weight: bold; cursor: pointer; border: none; }
+    .user-info { display: none; color: #fff; font-size: 0.9rem; }
     
+    /* Sidebar Menu */
+    .sidebar { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; background: #111827; color: #fff; z-index: 200; transition: left 0.3s ease; overflow-y: auto; }
+    .sidebar.open { left: 0; }
+    .sidebar-header { padding: 1rem; font-size: 1.2rem; font-weight: bold; border-bottom: 1px solid #374151; display: flex; justify-content: space-between; align-items: center; }
+    .close-btn { cursor: pointer; font-size: 1.5rem; color: #9ca3af; }
+    .sidebar a { display: block; padding: 1rem; color: #d1d5db; border-bottom: 1px solid #374151; text-decoration: none; font-size: 1rem; }
+    .sidebar a:hover { background: #374151; color: #fff; }
+    .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 150; display: none; }
+    .sidebar-overlay.open { display: block; }
+
     /* Layout */
     .main-layout { display: flex; flex-direction: column; gap: 2rem; padding: 2rem 0; }
     @media (min-width: 768px) {
       .main-layout { flex-direction: row; align-items: flex-start; }
-      .calculator-section { width: 400px; flex-shrink: 0; }
+      .calculator-section { width: 420px; flex-shrink: 0; }
       .tools-section { flex-grow: 1; }
     }
 
-    /* Quick Calculator */
-    .calculator-box { 
-      background: #e2e8f0; 
-      border: 1px solid #94a3b8;
-      border-radius: var(--radius); 
-      padding: 10px;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-    }
-    .qc-tabs { display: flex; margin-bottom: 10px; }
-    .qc-tab { background: #f1f5f9; border: 1px solid #94a3b8; padding: 5px 15px; font-weight: bold; cursor: pointer; }
-    .qc-tab.active { background: #fff; border-bottom-color: #fff; }
-    .qc-display { background: #3b6999; color: #fff; padding: 0.5rem; text-align: right; font-size: 2rem; font-weight: 600; min-height: 60px; margin-bottom: 10px; display: flex; align-items: center; justify-content: flex-end; overflow-x: auto; }
-    .qc-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
-    .qc-btn { background: #cbd5e1; border: 1px solid #94a3b8; padding: 0.8rem 0; font-size: 1.1rem; font-weight: 600; color: var(--text); cursor: pointer; border-radius: 2px; }
-    .qc-btn:hover { background: #94a3b8; }
-    .qc-btn.op { background: #fff; }
-    .qc-btn.op:hover { background: #f1f5f9; }
-    .qc-btn.equal { background: #cbd5e1; font-weight: bold; }
+    /* Calculator UI */
+    .calc-wrapper { background: #e2e8f0; border: 1px solid #94a3b8; padding: 10px; border-radius: var(--radius); box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+    .calc-tabs { display: flex; margin-bottom: 10px; }
+    .calc-tab { background: #f1f5f9; border: 1px solid #94a3b8; padding: 5px 15px; font-weight: bold; cursor: pointer; font-size: 1rem; color: var(--text); }
+    .calc-tab.active { background: #fff; border-bottom-color: #fff; color: var(--primary); }
+    .calc-display { background: #3b6999; color: #fff; padding: 0.5rem 1rem; text-align: right; font-size: 2rem; font-weight: 600; min-height: 60px; margin-bottom: 10px; display: flex; align-items: center; justify-content: flex-end; overflow-x: auto; }
+    
+    .calc-pad { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+    .calc-pad-scientific { display: none; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 5px; }
+    .calc-pad-scientific.active { display: grid; }
+    
+    .c-btn { background: #cbd5e1; border: 1px solid #94a3b8; padding: 0.8rem 0; font-size: 1.1rem; font-weight: 600; color: var(--text); cursor: pointer; border-radius: 2px; user-select: none; }
+    .c-btn:hover { background: #94a3b8; }
+    .c-btn.op { background: #fff; }
+    .c-btn.op:hover { background: #f1f5f9; }
+    .c-btn.equal { background: #cbd5e1; font-weight: bold; }
+    .c-btn.sci { background: #dbeafe; font-size: 0.95rem; }
+    
+    /* History */
+    .history-box { margin-top: 1rem; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; display: none; }
+    .history-box h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-muted); }
+    .history-box ul { list-style: none; font-size: 0.9rem; color: #374151; }
+    .history-box li { padding: 0.25rem 0; border-bottom: 1px solid #f3f4f6; cursor: pointer; }
+    .history-box li:hover { color: var(--primary); }
 
     /* Tools List */
-    .category-header { background: #1e40af; color: #fff; padding: 0.5rem 1rem; font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem; margin-top: 1.5rem; }
+    .category-header { background: #1e40af; color: #fff; padding: 0.5rem 1rem; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem; margin-top: 1.5rem; border-radius: 4px; }
     .category-header:first-child { margin-top: 0; }
-    .tool-list { display: grid; grid-template-columns: 1fr; gap: 0.5rem; padding-left: 1rem; }
+    .tool-list { display: grid; grid-template-columns: 1fr; gap: 0.4rem; padding-left: 0.5rem; margin-bottom: 1rem; }
     @media (min-width: 600px) { .tool-list { grid-template-columns: 1fr 1fr; } }
-    .tool-list a { display: block; font-size: 1.05rem; padding: 0.2rem 0; }
+    .tool-list a { display: block; font-size: 1.05rem; padding: 0.2rem 0; color: #1e40af; }
     
-    /* Display Area */
-    .tool-display-area { display: none; padding: 2rem 0; max-width: 600px; margin: 0 auto; }
-    .tool-box { background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    /* Display Area & Pages */
+    .page-box { display: none; padding: 2rem 0; max-width: 800px; margin: 0 auto; }
+    .page-content { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .page-content h1 { color: var(--primary); margin-bottom: 1rem; }
+    .page-content h2 { color: var(--primary); margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.3rem; }
+    .page-content p { margin-bottom: 1rem; color: #374151; }
+    .page-content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: #374151; }
+    
     .input-group { margin-bottom: 1rem; }
-    .input-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.95rem; color: #374151; }
-    .input-group input, .input-group select { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; outline: none; }
-    .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-    .btn { background: #2563eb; color: white; padding: 0.85rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; transition: background 0.2s; }
-    .btn:hover { background: #1e40af; }
+    .input-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.95rem; }
+    .input-group input, .input-group select { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; }
+    .btn { background: var(--primary-light); color: white; padding: 0.85rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; }
+    .btn:hover { background: var(--primary); }
     .result-box { display: none; margin-top: 1.5rem; padding: 1.5rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; text-align: center; }
     
     /* Search */
-    .search-box { margin-bottom: 1.5rem; position: relative; }
-    .search-box input { width: 100%; padding: 0.75rem 1rem; font-size: 1rem; border: 1px solid var(--border); border-radius: var(--radius); outline: none; }
-    .search-results { list-style: none; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-height: 200px; overflow-y: auto; display: none; position: absolute; z-index: 10; width: 100%; }
+    .search-box { margin-bottom: 1.5rem; position: relative; display: flex; gap: 0.5rem; }
+    .search-box input { flex-grow: 1; padding: 0.75rem 1rem; font-size: 1rem; border: 1px solid var(--border); border-radius: var(--radius); outline: none; }
+    .search-btn { background: var(--primary); color: #fff; border: none; padding: 0 1.5rem; border-radius: var(--radius); font-weight: bold; cursor: pointer; }
+    .search-results { list-style: none; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); max-height: 200px; overflow-y: auto; display: none; position: absolute; z-index: 10; width: calc(100% - 80px); top: 100%; margin-top: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     .search-results li a { display: block; padding: 0.75rem 1rem; color: var(--text); border-bottom: 1px solid var(--border); }
     .search-results li a:hover { background: #f1f5f9; }
     
@@ -80,55 +117,99 @@
 </head>
 <body>
 
+  <!-- Header -->
   <header class="site-header">
-    <a href="#" class="logo" onclick="showHome(); return false;">
-      <span class="logo-icon">∑</span>
-      <span>World Calculators</span>
-    </a>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <div class="logo-text" onclick="showHome()">World<span>Calculators</span></div>
+    <div class="header-actions">
+      <button class="signin-btn" onclick="handleSignIn()" id="signin-btn">Sign In</button>
+      <div class="user-info" id="user-info">
+        <span id="user-email"></span>
+        <button class="signin-btn" onclick="handleSignOut()" style="margin-left:10px; background:#ef4444; color:#fff;">Logout</button>
+      </div>
+    </div>
   </header>
+
+  <!-- Sidebar Menu -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMenu()"></div>
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span>Menu</span>
+      <span class="close-btn" onclick="toggleMenu()">×</span>
+    </div>
+    <a href="#" onclick="showHome(); toggleMenu();">Home</a>
+    <a href="#financial" onclick="toggleMenu();">Financial Calculators</a>
+    <a href="#health" onclick="toggleMenu();">Fitness & Health</a>
+    <a href="#math" onclick="toggleMenu();">Math Calculators</a>
+    <a href="#" onclick="showPage('about'); toggleMenu();">About Us</a>
+    <a href="#" onclick="showPage('contact'); toggleMenu();">Contact Us</a>
+    <a href="#" onclick="showPage('privacy'); toggleMenu();">Privacy Policy</a>
+    <a href="#" onclick="showPage('terms'); toggleMenu();">Terms & Conditions</a>
+  </div>
 
   <!-- मुख्य होम पेज -->
   <div id="page-home" class="container main-layout">
     
     <!-- बाईं तरफ: कैलकुलेटर -->
     <div class="calculator-section">
-      <div class="calculator-box">
-        <div class="qc-tabs">
-          <div class="qc-tab active">Basic</div>
-          <div class="qc-tab">Scientific</div>
+      <div class="calc-wrapper">
+        <div class="calc-tabs">
+          <div class="calc-tab active" id="tab-basic" onclick="switchTab('basic')">Basic</div>
+          <div class="calc-tab" id="tab-scientific" onclick="switchTab('scientific')">Scientific</div>
         </div>
-        <div class="qc-display" id="qc-display">0</div>
-        <div class="qc-buttons">
-          <button class="qc-btn" onclick="qcInput('7')">7</button>
-          <button class="qc-btn" onclick="qcInput('8')">8</button>
-          <button class="qc-btn" onclick="qcInput('9')">9</button>
-          <button class="qc-btn op" onclick="qcInput('+')">+</button>
-          <button class="qc-btn op" onclick="qcBack()">Back</button>
-
-          <button class="qc-btn" onclick="qcInput('4')">4</button>
-          <button class="qc-btn" onclick="qcInput('5')">5</button>
-          <button class="qc-btn" onclick="qcInput('6')">6</button>
-          <button class="qc-btn op" onclick="qcInput('-')">−</button>
-          <button class="qc-btn op" onclick="qcInput('ans')">Ans</button>
-
-          <button class="qc-btn" onclick="qcInput('1')">1</button>
-          <button class="qc-btn" onclick="qcInput('2')">2</button>
-          <button class="qc-btn" onclick="qcInput('3')">3</button>
-          <button class="qc-btn op" onclick="qcInput('*')">×</button>
-          <button class="qc-btn op" onclick="qcInput('m+')">M+</button>
-
-          <button class="qc-btn" onclick="qcInput('0')">0</button>
-          <button class="qc-btn" onclick="qcInput('.')">.</button>
-          <button class="qc-btn op" onclick="qcInput('exp')">EXP</button>
-          <button class="qc-btn op" onclick="qcInput('/')">/</button>
-          <button class="qc-btn op" onclick="qcInput('m-')">M-</button>
-
-          <button class="qc-btn op" onclick="qcInput('+/-')">±</button>
-          <button class="qc-btn op" onclick="qcInput('rnd')">RND</button>
-          <button class="qc-btn equal" onclick="qcClear()">AC</button>
-          <button class="qc-btn equal" onclick="qcCalculate()">=</button>
-          <button class="qc-btn op" onclick="qcInput('mr')">MR</button>
+        
+        <div class="calc-display" id="calc-display">0</div>
+        
+        <div class="calc-pad-scientific" id="pad-scientific">
+          <button class="c-btn sci" onclick="sciInput('sin(')">sin</button>
+          <button class="c-btn sci" onclick="sciInput('cos(')">cos</button>
+          <button class="c-btn sci" onclick="sciInput('tan(')">tan</button>
+          <button class="c-btn sci" onclick="sciInput('π')">π</button>
+          <button class="c-btn sci" onclick="sciInput('e')">e</button>
+          
+          <button class="c-btn sci" onclick="sciInput('^')">x^y</button>
+          <button class="c-btn sci" onclick="sciInput('^2')">x²</button>
+          <button class="c-btn sci" onclick="sciInput('sqrt(')">√x</button>
+          <button class="c-btn sci" onclick="sciInput('log(')">log</button>
+          <button class="c-btn sci" onclick="sciInput('ln(')">ln</button>
         </div>
+
+        <div class="calc-pad">
+          <button class="c-btn" onclick="calcInput('7')">7</button>
+          <button class="c-btn" onclick="calcInput('8')">8</button>
+          <button class="c-btn" onclick="calcInput('9')">9</button>
+          <button class="c-btn op" onclick="calcInput('+')">+</button>
+          <button class="c-btn op" onclick="calcBack()">Back</button>
+
+          <button class="c-btn" onclick="calcInput('4')">4</button>
+          <button class="c-btn" onclick="calcInput('5')">5</button>
+          <button class="c-btn" onclick="calcInput('6')">6</button>
+          <button class="c-btn op" onclick="calcInput('-')">−</button>
+          <button class="c-btn op" onclick="calcInput('ans')">Ans</button>
+
+          <button class="c-btn" onclick="calcInput('1')">1</button>
+          <button class="c-btn" onclick="calcInput('2')">2</button>
+          <button class="c-btn" onclick="calcInput('3')">3</button>
+          <button class="c-btn op" onclick="calcInput('*')">×</button>
+          <button class="c-btn op" onclick="calcInput('m+')">M+</button>
+
+          <button class="c-btn" onclick="calcInput('0')">0</button>
+          <button class="c-btn" onclick="calcInput('.')">.</button>
+          <button class="c-btn op" onclick="calcInput('exp')">EXP</button>
+          <button class="c-btn op" onclick="calcInput('/')">/</button>
+          <button class="c-btn op" onclick="calcInput('m-')">M-</button>
+
+          <button class="c-btn op" onclick="calcInput('+/-')">±</button>
+          <button class="c-btn op" onclick="calcInput('rnd')">RND</button>
+          <button class="c-btn equal" onclick="calcClear()">AC</button>
+          <button class="c-btn equal" onclick="calcCalculate()">=</button>
+          <button class="c-btn op" onclick="calcInput('mr')">MR</button>
+        </div>
+      </div>
+      
+      <div class="history-box" id="history-box">
+        <h3>History (Click to use)</h3>
+        <ul id="history-list"></ul>
       </div>
     </div>
 
@@ -136,6 +217,7 @@
     <div class="tools-section">
       <div class="search-box">
         <input type="text" id="toolSearch" placeholder="Search calculators..." onkeyup="searchTools()" onblur="setTimeout(hideSearch, 200)" onfocus="searchTools()" />
+        <button class="search-btn" onclick="searchTools()">Search</button>
         <ul class="search-results" id="searchResults"></ul>
       </div>
 
@@ -145,22 +227,121 @@
   </div>
 
   <!-- टूल डिस्प्ले एरिया -->
-  <div id="tool-display-area" class="container tool-display-area">
-    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
-    <div class="tool-box">
-      <h1 id="display-title" style="margin-bottom: 1.5rem; text-align: center; color: #1e40af;"></h1>
+  <div id="tool-display-area" class="page-box">
+    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Calculators</a>
+    <div class="page-content">
+      <h1 id="display-title" style="text-align: center;"></h1>
       <div id="display-content"></div>
     </div>
   </div>
 
-  <!-- सभी 5 फाइलों को जोड़ें -->
+  <!-- ================= STATIC PAGES (SEO & Policy) ================= -->
+  
+  <!-- About Us -->
+  <div id="page-about" class="page-box">
+    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
+    <div class="page-content">
+      <h1>About Us</h1>
+      <p>Welcome to <strong>World Calculators</strong>. We are dedicated to providing the world's most accurate and easy-to-use online calculators for free.</p>
+      <p>Our mission is to help students, professionals, and everyday users make quick and accurate calculations without any hassle. Whether you need financial tools like EMI calculators, health tools like BMI, or scientific math tools, we have it all in one place.</p>
+      <p>All our tools run directly in your browser, ensuring your privacy is 100% protected. No data is sent to our servers.</p>
+    </div>
+  </div>
+
+  <!-- Contact Us -->
+  <div id="page-contact" class="page-box">
+    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
+    <div class="page-content">
+      <h1>Contact Us</h1>
+      <p>If you have any questions, feedback, or need support, please feel free to reach out to us.</p>
+      <p><strong>Email:</strong> support@worldcalculators.com</p>
+      <p>We usually respond within 24-48 hours.</p>
+    </div>
+  </div>
+
+  <!-- Privacy Policy -->
+  <div id="page-privacy" class="page-box">
+    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
+    <div class="page-content">
+      <h1>Privacy Policy</h1>
+      <p>Last updated: October 2023</p>
+      <p>At World Calculators, accessible from our website, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by us and how we use it.</p>
+      <h2>1. Calculator Data</h2>
+      <p>All calculations and inputs you make in our tools are processed locally in your browser. We do not store, save, or transmit your calculation data to any external server.</p>
+      <h2>2. Log Files</h2>
+      <p>World Calculators follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected includes IP addresses, browser type, Internet Service Provider (ISP), date and time stamp, and referring/exit pages. This is not linked to any personally identifiable information.</p>
+      <h2>3. Cookies and Web Beacons</h2>
+      <p>Like any other website, we use 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience.</p>
+      <h2>4. Google DoubleClick DART Cookie</h2>
+      <p>Google is one of the third-party vendors on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to our site and other sites on the internet.</p>
+    </div>
+  </div>
+
+  <!-- Terms & Conditions -->
+  <div id="page-terms" class="page-box">
+    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
+    <div class="page-content">
+      <h1>Terms and Conditions</h1>
+      <p>Welcome to World Calculators!</p>
+      <p>These terms and conditions outline the rules and regulations for the use of our website.</p>
+      <h2>1. Accuracy of Information</h2>
+      <p>While we strive to provide the most accurate calculations, World Calculators does not warrant or guarantee the accuracy, completeness, or usefulness of any information provided. Financial and health calculators are for informational purposes only and should not replace professional advice.</p>
+      <h2>2. Use License</h2>
+      <p>Permission is granted to temporarily use the calculators on this website for personal, non-commercial transitory viewing only.</p>
+      <h2>3. Disclaimer</h2>
+      <p>The materials on this website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property.</p>
+    </div>
+  </div>
+
+
+  <!-- ================= 5 DATA FILES ================= -->
   <script src="calc1.js"></script>
   <script src="calc2.js"></script>
   <script src="calc3.js"></script>
   <script src="calc4.js"></script>
   <script src="calc5.js"></script>
   
+  <!-- ================= FIREBASE SDK (For Real Sign In) ================= -->
+  <script type="module">
+    // यहाँ आपको अपना Firebase Config डालना होगा (नीचे स्टेप 2 में बताया गया है)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    // ⚠️ अपनी Firebase Config यहाँ डालें (स्टेप 2 देखें)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    window.firebaseAuth = auth;
+
+    onAuthStateChanged(auth, (user) => {
+      var btn = document.getElementById('signin-btn');
+      var info = document.getElementById('user-info');
+      var emailSpan = document.getElementById('user-email');
+      
+      if (user) {
+        btn.style.display = 'none';
+        info.style.display = 'block';
+        emailSpan.textContent = user.email;
+      } else {
+        btn.style.display = 'block';
+        info.style.display = 'none';
+        emailSpan.textContent = "";
+      }
+    });
+  </script>
+
   <script>
+        // ==========================================
+    // 1. DATA SETUP & MENU LOGIC
+    // ==========================================
     var allTools = [];
     var allHtmls = {};
     if(typeof tools1 !== 'undefined') { allTools = allTools.concat(tools1); Object.assign(allHtmls, htmls1); }
@@ -169,31 +350,30 @@
     if(typeof tools4 !== 'undefined') { allTools = allTools.concat(tools4); Object.assign(allHtmls, htmls4); }
     if(typeof tools5 !== 'undefined') { allTools = allTools.concat(tools5); Object.assign(allHtmls, htmls5); }
 
-    // कैटेगरी (Categories) के हिसाब से टूल्स को बांटना
     var categories = {
-      "Financial": ["emi", "interest", "gst", "discount", "tip", "compound", "sip", "tax", "salary", "retire"],
-      "Health & Fitness": ["bmi", "age", "bodyfat", "bmr", "caldef", "water", "weightloss", "pregnancy", "bmikids"],
-      "Math": ["percentage", "average", "gpa", "time", "random", "scientific", "fraction", "area", "volume", "quadratic", "pythagoras", "circumference", "stdev", "probability", "permcomb"],
-      "Everyday Life": ["date-diff", "fuel", "electricity", "mileage", "currency"],
-      "Physics & Engineering": ["ohm", "speeddist", "force", "work", "density", "molar", "concrete", "paint", "tile"],
-      "Basic Tools": ["simplecalc"]
+      "Financial": { id: "financial", items: ["emi", "interest", "gst", "discount", "tip", "compound", "sip", "tax", "salary", "retire"] },
+      "Health & Fitness": { id: "health", items: ["bmi", "age", "bodyfat", "bmr", "caldef", "water", "weightloss", "pregnancy", "bmikids"] },
+      "Math": { id: "math", items: ["percentage", "average", "gpa", "time", "random", "scientific", "fraction", "area", "volume", "quadratic", "pythagoras", "circumference", "stdev", "probability", "permcomb"] },
+      "Everyday Life": { id: "everyday", items: ["date-diff", "fuel", "electricity", "mileage", "currency"] },
+      "Physics & Engineering": { id: "physics", items: ["ohm", "speeddist", "force", "work", "density", "molar", "concrete", "paint", "tile"] },
+      "Basic Tools": { id: "basic", items: ["simplecalc"] }
     };
 
     document.addEventListener('DOMContentLoaded', function() {
       var catList = document.getElementById('category-list');
-      
       for (var catName in categories) {
+        var catObj = categories[catName];
         var header = document.createElement('div');
         header.className = 'category-header';
+        header.id = catObj.id;
         header.textContent = catName;
         catList.appendChild(header);
 
         var listDiv = document.createElement('div');
         listDiv.className = 'tool-list';
         
-        var toolIds = categories[catName];
-        for (var i = 0; i < toolIds.length; i++) {
-          var id = toolIds[i];
+        for (var i = 0; i < catObj.items.length; i++) {
+          var id = catObj.items[i];
           var t = allTools.find(function(x) { return x.id === id; });
           if (t) {
             var a = document.createElement('a');
@@ -207,20 +387,45 @@
         }
         catList.appendChild(listDiv);
       }
+      
+      loadHistory();
     });
 
-    function showTool(toolId) {
+    function toggleMenu() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebar-overlay').classList.toggle('open');
+    }
+
+    // ==========================================
+    // 2. NAVIGATION & PAGES
+    // ==========================================
+    function hideAllPages() {
       document.getElementById('page-home').classList.add('hidden');
+      document.getElementById('tool-display-area').style.display = 'none';
+      document.getElementById('page-about').style.display = 'none';
+      document.getElementById('page-contact').style.display = 'none';
+      document.getElementById('page-privacy').style.display = 'none';
+      document.getElementById('page-terms').style.display = 'none';
+    }
+
+    function showHome() {
+      hideAllPages();
+      document.getElementById('page-home').classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    function showPage(pageId) {
+      hideAllPages();
+      document.getElementById('page-' + pageId).style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    function showTool(toolId) {
+      hideAllPages();
       document.getElementById('tool-display-area').style.display = 'block';
       var t = allTools.find(function(x) { return x.id === toolId; });
       document.getElementById('display-title').textContent = t.name;
       document.getElementById('display-content').innerHTML = allHtmls[toolId];
-      window.scrollTo(0, 0);
-    }
-
-    function showHome() {
-      document.getElementById('page-home').classList.remove('hidden');
-      document.getElementById('tool-display-area').style.display = 'none';
       window.scrollTo(0, 0);
     }
 
@@ -243,49 +448,203 @@
     }
     function hideSearch() { document.getElementById('searchResults').style.display = 'none'; }
 
-    // Quick Calculator Logic
-    var qcStr = "0";
-    var qcAns = 0;
-    var qcMem = 0;
-    
-    function qcInput(val) {
-      if (qcStr === "0" && val !== "." && val !== "+" && val !== "-" && val !== "*" && val !== "/") qcStr = "";
-      if (val === 'ans') { qcStr += qcAns; }
-      else if (val === 'm+') { qcMem = qcAns; return; }
-      else if (val === 'm-') { qcMem = -qcAns; return; }
-      else if (val === 'mr') { qcStr += qcMem; }
-      else if (val === 'rnd') { qcStr += Math.random().toFixed(4); }
-      else if (val === 'exp') { qcStr += 'e'; }
-      else if (val === '+/-') { qcStr = (-parseFloat(qcStr)).toString(); }
-      else { qcStr += val; }
+    // ==========================================
+    // 3. CALCULATOR ENGINE
+    // ==========================================
+    var calcExpr = "0";
+    var displayStr = "0";
+    var lastAns = 0;
+    var memVal = 0;
+    var isDegree = true;
+
+    function switchTab(type) {
+      document.getElementById('tab-basic').classList.remove('active');
+      document.getElementById('tab-scientific').classList.remove('active');
+      if(type === 'basic') {
+        document.getElementById('tab-basic').classList.add('active');
+        document.getElementById('pad-scientific').classList.remove('active');
+      } else {
+        document.getElementById('tab-scientific').classList.add('active');
+        document.getElementById('pad-scientific').classList.add('active');
+      }
+    }
+
+    function updateDisplay() {
+      document.getElementById('calc-display').textContent = displayStr;
+    }
+
+    function calcInput(val) {
+      if (displayStr === "0" && val !== "." && val !== "+" && val !== "-" && val !== "*" && val !== "/") {
+        displayStr = ""; calcExpr = "";
+      }
       
-      // डिस्प्ले पर * को × और / को ÷ दिखाने के लिए
-      document.getElementById('qc-display').textContent = qcStr.replace(/\*/g, '×').replace(/\//g, '÷');
+      if (val === 'ans') {
+        displayStr += lastAns; calcExpr += lastAns;
+      } else if (val === 'm+') {
+        memVal = lastAns; return;
+      } else if (val === 'm-') {
+        memVal = -lastAns; return;
+      } else if (val === 'mr') {
+        displayStr += memVal; calcExpr += memVal;
+      } else if (val === 'rnd') {
+        var r = Math.random().toFixed(4);
+        displayStr += r; calcExpr += r;
+      } else if (val === 'exp') {
+        displayStr += 'e'; calcExpr += 'e';
+      } else if (val === '+/-') {
+        displayStr = (-parseFloat(displayStr)).toString();
+        calcExpr = displayStr;
+      } else if (val === '*') {
+        displayStr += '×'; calcExpr += '*';
+      } else if (val === '/') {
+        displayStr += '÷'; calcExpr += '/';
+      } else {
+        displayStr += val; calcExpr += val;
+      }
+      updateDisplay();
     }
-    
-    function qcClear() {
-      qcStr = "0";
-      document.getElementById('qc-display').textContent = "0";
+
+    function sciInput(val) {
+      if (val === 'π') {
+        displayStr += 'π'; calcExpr += Math.PI;
+      } else if (val === 'e') {
+        displayStr += 'e'; calcExpr += Math.E;
+      } else if (val === '^') {
+        displayStr += '^'; calcExpr += '**';
+      } else if (val === '^2') {
+        displayStr += '²'; calcExpr += '**2';
+      } else if (val === 'sqrt(') {
+        displayStr += '√('; calcExpr += 'Math.sqrt(';
+      } else if (val === 'log(') {
+        displayStr += 'log('; calcExpr += 'Math.log10(';
+      } else if (val === 'ln(') {
+        displayStr += 'ln('; calcExpr += 'Math.log(';
+      } else if (val === 'sin(' || val === 'cos(' || val === 'tan(') {
+        displayStr += val; 
+        if(isDegree) calcExpr += 'Math.' + val.replace('(', '') + '((Math.PI/180)*';
+        else calcExpr += 'Math.' + val;
+      } else {
+        displayStr += val; calcExpr += val;
+      }
+      updateDisplay();
     }
-    
-    function qcBack() {
-      qcStr = qcStr.slice(0, -1);
-      if (qcStr === "") qcStr = "0";
-      document.getElementById('qc-display').textContent = qcStr.replace(/\*/g, '×').replace(/\//g, '÷');
+
+    function calcClear() {
+      calcExpr = "0"; displayStr = "0"; updateDisplay();
     }
-    
-    function qcCalculate() {
+
+    function calcBack() {
+      displayStr = displayStr.slice(0, -1);
+      if (displayStr === "") displayStr = "0";
+      calcExpr = displayStr.replace(/×/g, '*').replace(/÷/g, '/').replace(/π/g, Math.PI).replace(/√/g,'Math.sqrt');
+      updateDisplay();
+    }
+
+    function calcCalculate() {
       try {
-        // स्क्रीन पर × और ÷ दिख रहा होगा, लेकिन हिसाब के लिए हमें * और / चाहिए
-        var evalStr = qcStr.replace(/×/g, '*').replace(/÷/g, '/');
-        var result = eval(evalStr);
+        var openBrackets = (calcExpr.match(/\(/g) || []).length;
+        var closeBrackets = (calcExpr.match(/\)/g) || []).length;
+        for(var i=0; i < (openBrackets - closeBrackets); i++) {
+          calcExpr += ')';
+        }
+
+        var result = eval(calcExpr);
         if (result === Infinity || isNaN(result)) throw Error();
-        qcAns = result;
-        qcStr = result.toString();
-        document.getElementById('qc-display').textContent = qcStr;
+        
+        lastAns = result;
+        displayStr = result.toString();
+        calcExpr = result.toString();
+        updateDisplay();
+        
+        saveHistory(displayStr);
       } catch (e) {
-        document.getElementById('qc-display').textContent = "Error";
-        qcStr = "0";
+        displayStr = "Error";
+        updateDisplay();
+        calcExpr = "0";
+      }
+    }
+
+    // ==========================================
+    // 4. HISTORY LOGIC
+    // ==========================================
+    var historyData = [];
+
+    function saveHistory(res) {
+      if(res === "Error" || res === "0") return;
+      historyData.unshift(res);
+      if(historyData.length > 5) historyData.pop();
+      localStorage.setItem("calcHistory", JSON.stringify(historyData));
+      renderHistory();
+    }
+
+    function loadHistory() {
+      var data = localStorage.getItem("calcHistory");
+      if(data) {
+        historyData = JSON.parse(data);
+        renderHistory();
+      }
+    }
+
+    function renderHistory() {
+      var box = document.getElementById('history-box');
+      var list = document.getElementById('history-list');
+      if(historyData.length > 0) {
+        box.style.display = 'block';
+        list.innerHTML = '';
+        for(var i=0; i<historyData.length; i++) {
+          var li = document.createElement('li');
+          li.textContent = historyData[i];
+          li.onclick = (function(val) {
+            return function() { 
+              if(displayStr === "0") { displayStr = val; calcExpr = val; }
+              else { displayStr += val; calcExpr += val; }
+              updateDisplay();
+            };
+          })(historyData[i]);
+          list.appendChild(li);
+        }
+      }
+    }
+
+    // ==========================================
+    // 5. AUTHENTICATION (Sign In / Sign Up)
+    // ==========================================
+    function handleSignIn() {
+      if(!window.firebaseAuth) {
+        alert("Firebase setup is pending. Please add your Firebase Config in the code.");
+        return;
+      }
+      
+      var email = prompt("Enter your Email ID:");
+      if(!email) return;
+      var password = prompt("Enter your Password (min 6 characters):");
+      if(!password) return;
+
+      // Try Signing In, if fails, try creating a new account
+      signInWithEmailAndPassword(window.firebaseAuth, email, password)
+        .then((userCredential) => {
+          alert("Welcome back! Signed in as: " + userCredential.user.email);
+        })
+        .catch((error) => {
+          if (error.code === 'auth/user-not-found') {
+            createUserWithEmailAndPassword(window.firebaseAuth, email, password)
+              .then((userCredential) => {
+                alert("Account created & Signed in as: " + userCredential.user.email);
+              })
+              .catch((err) => {
+                alert("Error: " + err.message);
+              });
+          } else {
+            alert("Login Error: " + error.message);
+          }
+        });
+    }
+
+    function handleSignOut() {
+      if(window.firebaseAuth) {
+        signOut(window.firebaseAuth).then(() => {
+          alert("Logged out successfully.");
+        });
       }
     }
   </script>
