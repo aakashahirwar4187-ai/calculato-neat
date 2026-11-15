@@ -60,6 +60,7 @@
         </div>
       </div>
     </section>
+    
     <section class="section">
       <div class="container">
         <h2 style="margin-bottom: 1rem;">All Calculators (50)</h2>
@@ -74,7 +75,72 @@
     <div class="tool-box" id="display-content"></div>
   </div>
 
-  <!-- यहाँ हमारी दूसरी फाइल लिंक होगी -->
-  <script src="calculators.js"></script>
+  <!-- 5 फाइलों को यहाँ जोड़ा गया है -->
+  <script src="calc1.js"></script>
+  <script src="calc2.js"></script>
+  <script src="calc3.js"></script>
+  <script src="calc4.js"></script>
+  <script src="calc5.js"></script>
+  
+  <!-- मुख्य लॉजिक -->
+  <script>
+    var allTools = [];
+    var allHtmls = {};
+
+    // 5 फाइलों से डेटा इकट्ठा करना
+    if(typeof tools1 !== 'undefined') { allTools = allTools.concat(tools1); Object.assign(allHtmls, htmls1); }
+    if(typeof tools2 !== 'undefined') { allTools = allTools.concat(tools2); Object.assign(allHtmls, htmls2); }
+    if(typeof tools3 !== 'undefined') { allTools = allTools.concat(tools3); Object.assign(allHtmls, htmls3); }
+    if(typeof tools4 !== 'undefined') { allTools = allTools.concat(tools4); Object.assign(allHtmls, htmls4); }
+    if(typeof tools5 !== 'undefined') { allTools = allTools.concat(tools5); Object.assign(allHtmls, htmls5); }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var grid = document.getElementById('homeToolGrid');
+      for (var i = 0; i < allTools.length; i++) {
+        var t = allTools[i];
+        var a = document.createElement('a');
+        a.className = 'tool-card';
+        a.setAttribute('onclick', 'showTool("' + t.id + '")');
+        a.innerHTML = '<span class="tool-emoji">' + t.icon + '</span><span class="tool-name">' + t.name + '</span>';
+        grid.appendChild(a);
+      }
+    });
+
+    function showTool(toolId) {
+      document.getElementById('page-home').style.display = 'none';
+      document.getElementById('tool-display-area').style.display = 'block';
+      
+      var t = allTools.find(function(x) { return x.id === toolId; });
+      document.getElementById('display-title').textContent = t.name;
+      document.getElementById('display-content').innerHTML = allHtmls[toolId];
+      
+      window.scrollTo(0, 0);
+    }
+
+    function showHome() {
+      document.getElementById('page-home').style.display = 'block';
+      document.getElementById('tool-display-area').style.display = 'none';
+      window.scrollTo(0, 0);
+    }
+
+    function searchTools() {
+      var input = document.getElementById('toolSearch').value.toLowerCase();
+      var results = document.getElementById('searchResults');
+      results.innerHTML = '';
+      if (input === '') { results.style.display = 'none'; return; }
+      var matches = allTools.filter(function(t) { return t.name.toLowerCase().indexOf(input) !== -1; });
+      if (matches.length === 0) { results.innerHTML = '<li><a>No tools found</a></li>'; } 
+      else {
+        for (var i = 0; i < matches.length; i++) {
+          var t = matches[i];
+          var li = document.createElement('li');
+          li.innerHTML = '<a onclick="showTool(\'' + t.id + '\')">' + t.name + '</a>';
+          results.appendChild(li);
+        }
+      }
+      results.style.display = 'block';
+    }
+    function hideSearch() { document.getElementById('searchResults').style.display = 'none'; }
+  </script>
 </body>
 </html>
