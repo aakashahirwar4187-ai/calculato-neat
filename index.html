@@ -4,165 +4,156 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>World Calculators All in One - Free Online Tools</title>
-  <meta name="description" content="World's best free online calculators. Fast, accurate, and mobile-friendly. Use the quick calculator or explore 50+ tools." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { 
-      --primary: #4f46e5; 
-      --primary-dark: #4338ca; 
-      --text: #111827; 
-      --text-muted: #6b7280; 
-      --bg: #f3f4f6;
-      --card-bg: #ffffff;
-      --border: #e5e7eb; 
-      --radius: 16px; 
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+      --primary: #2563eb; --primary-dark: #1e40af; 
+      --text: #111827; --text-muted: #6b7280; 
+      --bg: #ffffff; --bg-alt: #f8fafc;
+      --border: #e2e8f0; --radius: 8px; 
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
     }
     body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
-    a { color: var(--primary); text-decoration: none; cursor: pointer; }
-    a:hover { color: var(--primary-dark); text-decoration: underline; }
-    .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+    a { color: #1e40af; text-decoration: none; cursor: pointer; }
+    a:hover { text-decoration: underline; }
+    .container { width: 100%; max-width: 900px; margin: 0 auto; padding: 0 1rem; }
     
     /* Header */
-    .site-header { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
-    .logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: 800; color: var(--text); text-decoration: none; letter-spacing: -0.5px; }
-    .logo-icon { background: var(--primary); color: #fff; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 1.5rem; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4); }
+    .site-header { background: #fff; border-bottom: 2px solid #1e40af; padding: 1rem 0; text-align: center; }
+    .logo { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1.5rem; font-weight: 800; color: var(--text); text-decoration: none; letter-spacing: -0.5px; }
+    .logo-icon { background: var(--primary); color: #fff; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 1.5rem; }
     
-    /* Hero Section */
-    .hero { background: linear-gradient(180deg, #e0e7ff 0%, #ffffff 100%); padding: 3rem 0 4rem; text-align: center; }
-    .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; color: #1e1b4b; letter-spacing: -1px; }
-    .hero-subtitle { color: var(--text-muted); max-width: 600px; margin: 0 auto 2rem; font-size: 1.1rem; }
-    
-    /* Quick Calculator */
-    .quick-calc-box { 
-      max-width: 400px; 
-      margin: 0 auto; 
-      background: var(--card-bg); 
-      border-radius: var(--radius); 
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); 
-      overflow: hidden; 
-      border: 1px solid var(--border);
+    /* Layout */
+    .main-layout { display: flex; flex-direction: column; gap: 2rem; padding: 2rem 0; }
+    @media (min-width: 768px) {
+      .main-layout { flex-direction: row; align-items: flex-start; }
+      .calculator-section { width: 400px; flex-shrink: 0; }
+      .tools-section { flex-grow: 1; }
     }
-    .qc-display { background: #1f2937; color: #fff; padding: 1.5rem; text-align: right; font-size: 2.5rem; font-weight: 600; min-height: 90px; display: flex; align-items: center; justify-content: flex-end; overflow-x: auto; }
-    .qc-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }
-    .qc-btn { background: #fff; border: none; padding: 1.5rem 0; font-size: 1.25rem; font-weight: 600; color: var(--text); cursor: pointer; transition: background 0.1s; }
-    .qc-btn:hover { background: #f9fafb; }
-    .qc-btn.op { color: var(--primary); }
-    .qc-btn.clear { color: #ef4444; }
-    .qc-btn.equal { background: var(--primary); color: #fff; grid-column: span 2; }
-    .qc-btn.equal:hover { background: var(--primary-dark); }
+
+    /* Quick Calculator */
+    .calculator-box { 
+      background: #e2e8f0; 
+      border: 1px solid #94a3b8;
+      border-radius: var(--radius); 
+      padding: 10px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+    .qc-tabs { display: flex; margin-bottom: 10px; }
+    .qc-tab { background: #f1f5f9; border: 1px solid #94a3b8; padding: 5px 15px; font-weight: bold; cursor: pointer; }
+    .qc-tab.active { background: #fff; border-bottom-color: #fff; }
+    .qc-display { background: #3b6999; color: #fff; padding: 0.5rem; text-align: right; font-size: 2rem; font-weight: 600; min-height: 60px; margin-bottom: 10px; display: flex; align-items: center; justify-content: flex-end; }
+    .qc-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+    .qc-btn { background: #cbd5e1; border: 1px solid #94a3b8; padding: 0.8rem 0; font-size: 1.1rem; font-weight: 600; color: var(--text); cursor: pointer; border-radius: 2px; }
+    .qc-btn:hover { background: #94a3b8; }
+    .qc-btn.op { background: #fff; }
+    .qc-btn.op:hover { background: #f1f5f9; }
+    .qc-btn.equal { background: #cbd5e1; font-weight: bold; }
+
+    /* Tools List */
+    .category-header { background: #1e40af; color: #fff; padding: 0.5rem 1rem; font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem; margin-top: 1.5rem; }
+    .category-header:first-child { margin-top: 0; }
+    .tool-list { display: grid; grid-template-columns: 1fr; gap: 0.5rem; padding-left: 1rem; }
+    @media (min-width: 600px) { .tool-list { grid-template-columns: 1fr 1fr; } }
+    .tool-list a { display: block; font-size: 1.05rem; padding: 0.2rem 0; }
+    
+    /* Display Area */
+    .tool-display-area { display: none; padding: 2rem 0; max-width: 600px; margin: 0 auto; }
+    .tool-box { background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .input-group { margin-bottom: 1rem; }
+    .input-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.95rem; color: #374151; }
+    .input-group input, .input-group select { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; outline: none; }
+    .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+    .btn { background: #2563eb; color: white; padding: 0.85rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; transition: background 0.2s; }
+    .btn:hover { background: #1e40af; }
+    .result-box { display: none; margin-top: 1.5rem; padding: 1.5rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; text-align: center; }
     
     /* Search */
-    .search-container { max-width: 600px; margin: 2rem auto 0; position: relative; z-index: 10; }
-    .search-box input { width: 100%; padding: 1.2rem 1.5rem; font-size: 1.1rem; border: 2px solid #c7d2fe; border-radius: 50px; outline: none; box-shadow: var(--shadow); transition: border-color 0.2s; }
-    .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
-    .search-results { list-style: none; position: absolute; top: 110%; left: 0; right: 0; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); max-height: 300px; overflow-y: auto; text-align: left; display: none; }
-    .search-results li a { display: block; padding: 1rem 1.5rem; color: var(--text); border-bottom: 1px solid var(--border); text-decoration: none; font-weight: 500; }
-    .search-results li a:hover { background: #f9fafb; color: var(--primary); }
-
-    /* Tools Grid */
-    .section { padding: 3rem 0; }
-    .section-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; color: #1f2937; display: flex; align-items: center; gap: 0.5rem; }
-    .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
-    .tool-card { display: flex; flex-direction: column; padding: 1.5rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); transition: all 0.2s; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .tool-card:hover { border-color: var(--primary); box-shadow: var(--shadow); transform: translateY(-4px); }
-    .tool-emoji { font-size: 2rem; margin-bottom: 1rem; }
-    .tool-name { font-weight: 700; font-size: 1.1rem; margin-bottom: 0.25rem; }
-    .tool-desc { font-size: 0.85rem; color: var(--text-muted); }
-
-    /* Display Area */
-    .tool-display { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 2rem; margin: 2rem auto; max-width: 600px; }
-    .input-group { margin-bottom: 1.25rem; }
-    .input-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.95rem; color: #374151; }
-    .input-group input, .input-group select { width: 100%; padding: 0.85rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; outline: none; transition: border-color 0.2s; }
-    .input-group input:focus, .input-group select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
-    .btn { background: var(--primary); color: white; padding: 1rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; transition: background 0.2s; }
-    .btn:hover { background: var(--primary-dark); }
-    .result-box { display: none; margin-top: 1.5rem; padding: 1.5rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; text-align: center; }
+    .search-box { margin-bottom: 1.5rem; }
+    .search-box input { width: 100%; padding: 0.75rem 1rem; font-size: 1rem; border: 1px solid var(--border); border-radius: var(--radius); outline: none; }
+    .search-results { list-style: none; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-height: 200px; overflow-y: auto; display: none; position: absolute; z-index: 10; width: 100%; }
+    .search-results li a { display: block; padding: 0.75rem 1rem; color: var(--text); border-bottom: 1px solid var(--border); }
+    .search-results li a:hover { background: #f1f5f9; }
     
-    @media (max-width: 600px) { 
-      .tool-grid { grid-template-columns: 1fr; } 
-      .hero h1 { font-size: 2rem; } 
-      .qc-btn { padding: 1.2rem 0; }
-    }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
   <header class="site-header">
-    <div class="container header-inner">
-      <a href="#" class="logo" onclick="showHome(); return false;">
-        <span class="logo-icon">∑</span>
-        <span>World Calculators</span>
-      </a>
-    </div>
+    <a href="#" class="logo" onclick="showHome(); return false;">
+      <span class="logo-icon">∑</span>
+      <span>World Calculators</span>
+    </a>
   </header>
 
-  <!-- होम पेज -->
-  <div id="page-home">
-    <section class="hero">
-      <div class="container">
-        <h1>Calculate Anything, Instantly.</h1>
-        <p class="hero-subtitle">World's simplest and fastest calculators. 100% free, private, and running in your browser.</p>
-        
-        <!-- Quick Calculator -->
-        <div class="quick-calc-box">
-          <div class="qc-display" id="qc-display">0</div>
-          <div class="qc-buttons">
-            <button class="qc-btn clear" onclick="qcClear()">AC</button>
-            <button class="qc-btn op" onclick="qcBack()">⌫</button>
-            <button class="qc-btn op" onclick="qcInput('%')">%</button>
-            <button class="qc-btn op" onclick="qcInput('/')">÷</button>
-            
-            <button class="qc-btn" onclick="qcInput('7')">7</button>
-            <button class="qc-btn" onclick="qcInput('8')">8</button>
-            <button class="qc-btn" onclick="qcInput('9')">9</button>
-            <button class="qc-btn op" onclick="qcInput('*')">×</button>
-            
-            <button class="qc-btn" onclick="qcInput('4')">4</button>
-            <button class="qc-btn" onclick="qcInput('5')">5</button>
-            <button class="qc-btn" onclick="qcInput('6')">6</button>
-            <button class="qc-btn op" onclick="qcInput('-')">-</button>
-            
-            <button class="qc-btn" onclick="qcInput('1')">1</button>
-            <button class="qc-btn" onclick="qcInput('2')">2</button>
-            <button class="qc-btn" onclick="qcInput('3')">3</button>
-            <button class="qc-btn op" onclick="qcInput('+')">+</button>
-            
-            <button class="qc-btn" onclick="qcInput('0')">0</button>
-            <button class="qc-btn" onclick="qcInput('.')">.</button>
-            <button class="qc-btn equal" onclick="qcCalculate()">=</button>
-          </div>
-        </div>
-
-        <div class="search-container">
-          <div class="search-box">
-            <input type="text" id="toolSearch" placeholder="Search tools... (e.g. BMI, Loan, Age)" onkeyup="searchTools()" onblur="setTimeout(hideSearch, 200)" onfocus="searchTools()" />
-            <ul class="search-results" id="searchResults"></ul>
-          </div>
-        </div>
-      </div>
-    </section>
+  <!-- मुख्य होम पेज -->
+  <div id="page-home" class="container main-layout">
     
-    <section class="section">
-      <div class="container">
-        <h2 class="section-title">Explore 50+ Calculators</h2>
-        <div class="tool-grid" id="homeToolGrid"></div>
+    <!-- बाईं तरफ: कैलकुलेटर -->
+    <div class="calculator-section">
+      <div class="calculator-box">
+        <div class="qc-tabs">
+          <div class="qc-tab active">Basic</div>
+          <div class="qc-tab">Scientific</div>
+        </div>
+        <div class="qc-display" id="qc-display">0</div>
+        <div class="qc-buttons">
+          <button class="qc-btn" onclick="qcInput('7')">7</button>
+          <button class="qc-btn" onclick="qcInput('8')">8</button>
+          <button class="qc-btn" onclick="qcInput('9')">9</button>
+          <button class="qc-btn op" onclick="qcInput('+')">+</button>
+          <button class="qc-btn op" onclick="qcBack()">Back</button>
+
+          <button class="qc-btn" onclick="qcInput('4')">4</button>
+          <button class="qc-btn" onclick="qcInput('5')">5</button>
+          <button class="qc-btn" onclick="qcInput('6')">6</button>
+          <button class="qc-btn op" onclick="qcInput('-')">−</button>
+          <button class="qc-btn op" onclick="qcInput('ans')">Ans</button>
+
+          <button class="qc-btn" onclick="qcInput('1')">1</button>
+          <button class="qc-btn" onclick="qcInput('2')">2</button>
+          <button class="qc-btn" onclick="qcInput('3')">3</button>
+          <button class="qc-btn op" onclick="qcInput('*')">×</button>
+          <button class="qc-btn op" onclick="qcInput('m+')">M+</button>
+
+          <button class="qc-btn" onclick="qcInput('0')">0</button>
+          <button class="qc-btn" onclick="qcInput('.')">.</button>
+          <button class="qc-btn op" onclick="qcInput('exp')">EXP</button>
+          <button class="qc-btn op" onclick="qcInput('/')">/</button>
+          <button class="qc-btn op" onclick="qcInput('m-')">M-</button>
+
+          <button class="qc-btn op" onclick="qcInput('+/-')">±</button>
+          <button class="qc-btn op" onclick="qcInput('rnd')">RND</button>
+          <button class="qc-btn equal" onclick="qcClear()">AC</button>
+          <button class="qc-btn equal" onclick="qcCalculate()">=</button>
+          <button class="qc-btn op" onclick="qcInput('mr')">MR</button>
+        </div>
       </div>
-    </section>
+    </div>
+
+    <!-- दाईं तरफ: टूल्स की सूची -->
+    <div class="tools-section">
+      <div class="search-box" style="position: relative;">
+        <input type="text" id="toolSearch" placeholder="Search calculators..." onkeyup="searchTools()" onblur="setTimeout(hideSearch, 200)" onfocus="searchTools()" />
+        <ul class="search-results" id="searchResults"></ul>
+      </div>
+
+      <div id="category-list"></div>
+    </div>
+
   </div>
 
   <!-- टूल डिस्प्ले एरिया -->
-  <div id="tool-display-area" class="container" style="display: none;">
-    <a onclick="showHome()" style="display: inline-block; margin: 1.5rem 0 1rem;">← Back to Home</a>
-    <div class="tool-display">
-      <h1 id="display-title" style="margin-bottom: 1.5rem; text-align: center;"></h1>
+  <div id="tool-display-area" class="container tool-display-area">
+    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
+    <div class="tool-box">
+      <h1 id="display-title" style="margin-bottom: 1.5rem; text-align: center; color: #1e40af;"></h1>
       <div id="display-content"></div>
     </div>
   </div>
 
+  <!-- सभी 5 फाइलों को जोड़ें -->
   <script src="calc1.js"></script>
   <script src="calc2.js"></script>
   <script src="calc3.js"></script>
@@ -178,20 +169,50 @@
     if(typeof tools4 !== 'undefined') { allTools = allTools.concat(tools4); Object.assign(allHtmls, htmls4); }
     if(typeof tools5 !== 'undefined') { allTools = allTools.concat(tools5); Object.assign(allHtmls, htmls5); }
 
+    // कैटेगरी (Categories) के हिसाब से टूल्स को बांटना
+    var categories = {
+      "Financial": ["emi", "interest", "gst", "discount", "tip", "compound", "sip", "tax", "salary", "retire"],
+      "Health & Fitness": ["bmi", "age", "bodyfat", "bmr", "caldef", "water", "weightloss", "pregnancy", "bmikids"],
+      "Math": ["percentage", "average", "gpa", "time", "random", "scientific", "fraction", "area", "volume", "quadratic", "pythagoras", "circumference", "stdev", "probability", "permcomb"],
+      "Everyday Life": ["date-diff", "fuel", "electricity", "mileage", "currency"],
+      "Physics & Engineering": ["ohm", "speeddist", "force", "work", "density", "molar", "concrete", "paint", "tile"],
+      "Basic Tools": ["simplecalc"]
+    };
+
     document.addEventListener('DOMContentLoaded', function() {
-      var grid = document.getElementById('homeToolGrid');
-      for (var i = 0; i < allTools.length; i++) {
-        var t = allTools[i];
-        var a = document.createElement('a');
-        a.className = 'tool-card';
-        a.setAttribute('onclick', 'showTool("' + t.id + '")');
-        a.innerHTML = '<span class="tool-emoji">' + t.icon + '</span><span class="tool-name">' + t.name + '</span><span class="tool-desc">Free online calculator</span>';
-        grid.appendChild(a);
+      var catList = document.getElementById('category-list');
+      
+      for (var catName in categories) {
+        // हेडर बनाएं
+        var header = document.createElement('div');
+        header.className = 'category-header';
+        header.textContent = catName;
+        catList.appendChild(header);
+
+        // टूल्स की लिस्ट बनाएं
+        var listDiv = document.createElement('div');
+        listDiv.className = 'tool-list';
+        
+        var toolIds = categories[catName];
+        for (var i = 0; i < toolIds.length; i++) {
+          var id = toolIds[i];
+          var t = allTools.find(function(x) { return x.id === id; });
+          if (t) {
+            var a = document.createElement('a');
+            a.href = "javascript:void(0)";
+            a.textContent = t.name;
+            a.onclick = (function(toolId) {
+              return function() { showTool(toolId); };
+            })(t.id);
+            listDiv.appendChild(a);
+          }
+        }
+        catList.appendChild(listDiv);
       }
     });
 
     function showTool(toolId) {
-      document.getElementById('page-home').style.display = 'none';
+      document.getElementById('page-home').classList.add('hidden');
       document.getElementById('tool-display-area').style.display = 'block';
       var t = allTools.find(function(x) { return x.id === toolId; });
       document.getElementById('display-title').textContent = t.name;
@@ -200,7 +221,7 @@
     }
 
     function showHome() {
-      document.getElementById('page-home').style.display = 'block';
+      document.getElementById('page-home').classList.remove('hidden');
       document.getElementById('tool-display-area').style.display = 'none';
       window.scrollTo(0, 0);
     }
@@ -225,29 +246,40 @@
     function hideSearch() { document.getElementById('searchResults').style.display = 'none'; }
 
     // Quick Calculator Logic
-    var qcStr = "";
+    var qcStr = "0";
+    var qcAns = 0;
+    var qcMem = 0;
     function qcInput(val) {
-      if (qcStr === "0" && val !== "." && val !== "+" && val !== "-" && val !== "*" && val !== "/" && val !== "%") qcStr = "";
-      qcStr += val;
+      if (qcStr === "0" && val !== "." && val !== "+" && val !== "-" && val !== "*" && val !== "/") qcStr = "";
+      if (val === 'ans') { qcStr += qcAns; }
+      else if (val === 'm+') { qcMem = qcAns; return; }
+      else if (val === 'm-') { qcMem = -qcAns; return; }
+      else if (val === 'mr') { qcStr += qcMem; }
+      else if (val === 'rnd') { qcStr += Math.random().toFixed(4); }
+      else if (val === 'exp') { qcStr += 'e'; }
+      else if (val === '+/-') { qcStr = (-parseFloat(qcStr)).toString(); }
+      else { qcStr += val; }
       document.getElementById('qc-display').textContent = qcStr;
     }
     function qcClear() {
-      qcStr = "";
+      qcStr = "0";
       document.getElementById('qc-display').textContent = "0";
     }
     function qcBack() {
       qcStr = qcStr.slice(0, -1);
-      document.getElementById('qc-display').textContent = qcStr === "" ? "0" : qcStr;
+      if (qcStr === "") qcStr = "0";
+      document.getElementById('qc-display').textContent = qcStr;
     }
     function qcCalculate() {
       try {
         var result = eval(qcStr);
         if (result === Infinity || isNaN(result)) throw Error();
+        qcAns = result;
         qcStr = result.toString();
         document.getElementById('qc-display').textContent = qcStr;
       } catch (e) {
         document.getElementById('qc-display').textContent = "Error";
-        qcStr = "";
+        qcStr = "0";
       }
     }
   </script>
