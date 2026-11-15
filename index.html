@@ -42,7 +42,7 @@
     .qc-tabs { display: flex; margin-bottom: 10px; }
     .qc-tab { background: #f1f5f9; border: 1px solid #94a3b8; padding: 5px 15px; font-weight: bold; cursor: pointer; }
     .qc-tab.active { background: #fff; border-bottom-color: #fff; }
-    .qc-display { background: #3b6999; color: #fff; padding: 0.5rem; text-align: right; font-size: 2rem; font-weight: 600; min-height: 60px; margin-bottom: 10px; display: flex; align-items: center; justify-content: flex-end; }
+    .qc-display { background: #3b6999; color: #fff; padding: 0.5rem; text-align: right; font-size: 2rem; font-weight: 600; min-height: 60px; margin-bottom: 10px; display: flex; align-items: center; justify-content: flex-end; overflow-x: auto; }
     .qc-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
     .qc-btn { background: #cbd5e1; border: 1px solid #94a3b8; padding: 0.8rem 0; font-size: 1.1rem; font-weight: 600; color: var(--text); cursor: pointer; border-radius: 2px; }
     .qc-btn:hover { background: #94a3b8; }
@@ -69,7 +69,7 @@
     .result-box { display: none; margin-top: 1.5rem; padding: 1.5rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; text-align: center; }
     
     /* Search */
-    .search-box { margin-bottom: 1.5rem; }
+    .search-box { margin-bottom: 1.5rem; position: relative; }
     .search-box input { width: 100%; padding: 0.75rem 1rem; font-size: 1rem; border: 1px solid var(--border); border-radius: var(--radius); outline: none; }
     .search-results { list-style: none; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-height: 200px; overflow-y: auto; display: none; position: absolute; z-index: 10; width: 100%; }
     .search-results li a { display: block; padding: 0.75rem 1rem; color: var(--text); border-bottom: 1px solid var(--border); }
@@ -134,7 +134,7 @@
 
     <!-- दाईं तरफ: टूल्स की सूची -->
     <div class="tools-section">
-      <div class="search-box" style="position: relative;">
+      <div class="search-box">
         <input type="text" id="toolSearch" placeholder="Search calculators..." onkeyup="searchTools()" onblur="setTimeout(hideSearch, 200)" onfocus="searchTools()" />
         <ul class="search-results" id="searchResults"></ul>
       </div>
@@ -183,13 +183,11 @@
       var catList = document.getElementById('category-list');
       
       for (var catName in categories) {
-        // हेडर बनाएं
         var header = document.createElement('div');
         header.className = 'category-header';
         header.textContent = catName;
         catList.appendChild(header);
 
-        // टूल्स की लिस्ट बनाएं
         var listDiv = document.createElement('div');
         listDiv.className = 'tool-list';
         
@@ -249,6 +247,7 @@
     var qcStr = "0";
     var qcAns = 0;
     var qcMem = 0;
+    
     function qcInput(val) {
       if (qcStr === "0" && val !== "." && val !== "+" && val !== "-" && val !== "*" && val !== "/") qcStr = "";
       if (val === 'ans') { qcStr += qcAns; }
@@ -259,20 +258,27 @@
       else if (val === 'exp') { qcStr += 'e'; }
       else if (val === '+/-') { qcStr = (-parseFloat(qcStr)).toString(); }
       else { qcStr += val; }
-      document.getElementById('qc-display').textContent = qcStr;
+      
+      // डिस्प्ले पर * को × और / को ÷ दिखाने के लिए
+      document.getElementById('qc-display').textContent = qcStr.replace(/\*/g, '×').replace(/\//g, '÷');
     }
+    
     function qcClear() {
       qcStr = "0";
       document.getElementById('qc-display').textContent = "0";
     }
+    
     function qcBack() {
       qcStr = qcStr.slice(0, -1);
       if (qcStr === "") qcStr = "0";
-      document.getElementById('qc-display').textContent = qcStr;
+      document.getElementById('qc-display').textContent = qcStr.replace(/\*/g, '×').replace(/\//g, '÷');
     }
+    
     function qcCalculate() {
       try {
-        var result = eval(qcStr);
+        // स्क्रीन पर × और ÷ दिख रहा होगा, लेकिन हिसाब के लिए हमें * और / चाहिए
+        var evalStr = qcStr.replace(/×/g, '*').replace(/÷/g, '/');
+        var result = eval(evalStr);
         if (result === Infinity || isNaN(result)) throw Error();
         qcAns = result;
         qcStr = result.toString();
