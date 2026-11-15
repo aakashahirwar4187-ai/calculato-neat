@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>World Calculators - Free Online Tools & Calculators</title>
-  <meta name="description" content="Free online calculators for finance, health, math, and more. Calculate EMI, BMI, Age, and 50+ tools in your browser." />
+  <meta name="description" content="Free online calculators for finance, health, math, and more. 100% accurate and easy to use. Calculate EMI, BMI, Age, and 100+ tools in your browser." />
   
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -48,22 +48,20 @@
     }
 
     /* Calculator UI */
-    .calc-wrapper { background: #e2e8f0; border: 1px solid #94a3b8; padding: 10px; border-radius: var(--radius); box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+    .calc-wrapper { background: #e2e8f0; border: 1px solid #94a3b8; padding: 10px; border-radius: 4px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
     .calc-tabs { display: flex; margin-bottom: 10px; }
-    .calc-tab { background: #f1f5f9; border: 1px solid #94a3b8; padding: 5px 15px; font-weight: bold; cursor: pointer; font-size: 1rem; color: var(--text); }
+    .calc-tab { background: #f1f5f9; border: 1px solid #94a3b8; padding: 5px 15px; font-weight: bold; cursor: pointer; font-size: 1rem; color: var(--text); border-bottom: none; }
     .calc-tab.active { background: #fff; border-bottom-color: #fff; color: var(--primary); }
     .calc-display { background: #3b6999; color: #fff; padding: 0.5rem 1rem; text-align: right; font-size: 2rem; font-weight: 600; min-height: 60px; margin-bottom: 10px; display: flex; align-items: center; justify-content: flex-end; overflow-x: auto; }
-    
     .calc-pad { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
     .calc-pad-scientific { display: none; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 5px; }
     .calc-pad-scientific.active { display: grid; }
-    
     .c-btn { background: #cbd5e1; border: 1px solid #94a3b8; padding: 0.8rem 0; font-size: 1.1rem; font-weight: 600; color: var(--text); cursor: pointer; border-radius: 2px; user-select: none; }
     .c-btn:hover { background: #94a3b8; }
     .c-btn.op { background: #fff; }
     .c-btn.op:hover { background: #f1f5f9; }
     .c-btn.equal { background: #cbd5e1; font-weight: bold; }
-    .c-btn.sci { background: #dbeafe; font-size: 0.95rem; }
+    .c-btn.sci { background: #dbeafe; font-size: 0.95rem; color: var(--primary); }
     
     /* History */
     .history-box { margin-top: 1rem; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; display: none; }
@@ -103,14 +101,13 @@
     
     .hidden { display: none !important; }
   </style>
-</head>
-<body>
+</head><body>
 
   <header class="site-header">
     <button class="menu-btn" onclick="toggleMenu()">☰</button>
     <div class="logo-text" onclick="showHome()">World<span>Calculators</span></div>
     <div class="header-actions">
-      <button class="signin-btn" onclick="alert('Sign In feature will be active soon!')">Sign In</button>
+      <button class="signin-btn" onclick="handleSignIn()">Sign In</button>
     </div>
   </header>
 
@@ -140,6 +137,7 @@
         
         <div class="calc-display" id="calc-display">0</div>
         
+        <!-- Scientific Pad -->
         <div class="calc-pad-scientific" id="pad-scientific">
           <button class="c-btn sci" onclick="sciInput('sin(')">sin</button>
           <button class="c-btn sci" onclick="sciInput('cos(')">cos</button>
@@ -202,156 +200,256 @@
 
       <div id="category-list"></div>
     </div>
+  </div><div id="tool-display-area" class="page-box">
+  <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Calculators</a>
+  <div class="page-content">
+    <h1 id="display-title" style="text-align: center;"></h1>
+    <div id="display-content"></div>
   </div>
+</div>
 
-  <div id="tool-display-area" class="page-box">
-    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Calculators</a>
-    <div class="page-content">
-      <h1 id="display-title" style="text-align: center;"></h1>
-      <div id="display-content"></div>
-    </div>
+<div id="page-about" class="page-box">
+  <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
+  <div class="page-content">
+    <h1>About Us</h1>
+    <p>Welcome to <strong>World Calculators</strong>. We are dedicated to providing the world's most accurate and easy-to-use online calculators for free.</p>
+    <p>Our mission is to help students, professionals, and everyday users make quick and accurate calculations without any hassle.</p>
   </div>
+</div>
 
-  <div id="page-about" class="page-box">
-    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
-    <div class="page-content">
-      <h1>About Us</h1>
-      <p>Welcome to <strong>World Calculators</strong>. We are dedicated to providing the world's most accurate and easy-to-use online calculators for free.</p>
-      <p>Our mission is to help students, professionals, and everyday users make quick and accurate calculations without any hassle.</p>
-    </div>
+<div id="page-contact" class="page-box">
+  <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
+  <div class="page-content">
+    <h1>Contact Us</h1>
+    <p>Email: support@worldcalculators.com</p>
   </div>
+</div>
 
-  <div id="page-contact" class="page-box">
-    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
-    <div class="page-content">
-      <h1>Contact Us</h1>
-      <p>Email: support@worldcalculators.com</p>
-    </div>
+<div id="page-privacy" class="page-box">
+  <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
+  <div class="page-content">
+    <h1>Privacy Policy</h1>
+    <p>Your privacy is important to us. All calculations are processed locally in your browser. We do not store or share your calculation data.</p>
+    <p>We use cookies to improve your experience. Google may use cookies to serve ads based on your visits.</p>
   </div>
+</div>
 
-  <div id="page-privacy" class="page-box">
-    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
-    <div class="page-content">
-      <h1>Privacy Policy</h1>
-      <p>Your privacy is important to us. All calculations are processed locally in your browser. We do not store or share your calculation data.</p>
-      <p>We use cookies to improve your experience. Google may use cookies to serve ads based on your visits.</p>
-    </div>
+<div id="page-terms" class="page-box">
+  <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
+  <div class="page-content">
+    <h1>Terms and Conditions</h1>
+    <p>By using this website, you agree to these terms.</p>
+    <p>Our calculators are for informational purposes only. We are not responsible for any financial or health decisions made based on these results.</p>
   </div>
+</div><script src="calc1.js"></script>
+<script src="calc2.js"></script>
+<script src="calc3.js"></script>
+<script src="calc4.js"></script>
+<script src="calc5.js"></script>
+<script src="calc6.js"></script>
+<script src="calc7.js"></script>
+<script src="calc8.js"></script>
+<script src="calc9.js"></script>
+<script src="calc10.js"></script>
+<script src="calc11.js"></script>
+<script src="calc12.js"></script>
+<script src="calc13.js"></script>
+<script src="calc14.js"></script>
+<script src="calc15.js"></script>
 
-  <div id="page-terms" class="page-box">
-    <a onclick="showHome()" style="display: inline-block; margin-bottom: 1rem;">← Back to Home</a>
-    <div class="page-content">
-      <h1>Terms and Conditions</h1>
-      <p>By using this website, you agree to these terms.</p>
-      <p>Our calculators are for informational purposes only. We are not responsible for any financial or health decisions made based on these results.</p>
-    </div>
-  </div>
+<script>
+  // डेटा इकट्ठा करना
+  var allTools = [];
+  var allHtmls = {};
+  if(typeof tools1 !== 'undefined') { allTools = allTools.concat(tools1); Object.assign(allHtmls, htmls1); }
+  if(typeof tools2 !== 'undefined') { allTools = allTools.concat(tools2); Object.assign(allHtmls, htmls2); }
+  if(typeof tools3 !== 'undefined') { allTools = allTools.concat(tools3); Object.assign(allHtmls, htmls3); }
+  if(typeof tools4 !== 'undefined') { allTools = allTools.concat(tools4); Object.assign(allHtmls, htmls4); }
+  if(typeof tools5 !== 'undefined') { allTools = allTools.concat(tools5); Object.assign(allHtmls, htmls5); }
+  if(typeof tools6 !== 'undefined') { allTools = allTools.concat(tools6); Object.assign(allHtmls, htmls6); }
+  if(typeof tools7 !== 'undefined') { allTools = allTools.concat(tools7); Object.assign(allHtmls, htmls7); }
+  if(typeof tools8 !== 'undefined') { allTools = allTools.concat(tools8); Object.assign(allHtmls, htmls8); }
+  if(typeof tools9 !== 'undefined') { allTools = allTools.concat(tools9); Object.assign(allHtmls, htmls9); }
+  if(typeof tools10 !== 'undefined') { allTools = allTools.concat(tools10); Object.assign(allHtmls, htmls10); }
+  if(typeof tools11 !== 'undefined') { allTools = allTools.concat(tools11); Object.assign(allHtmls, htmls11); }
+  if(typeof tools12 !== 'undefined') { allTools = allTools.concat(tools12); Object.assign(allHtmls, htmls12); }
+  if(typeof tools13 !== 'undefined') { allTools = allTools.concat(tools13); Object.assign(allHtmls, htmls13); }
+  if(typeof tools14 !== 'undefined') { allTools = allTools.concat(tools14); Object.assign(allHtmls, htmls14); }
+  if(typeof tools15 !== 'undefined') { allTools = allTools.concat(tools15); Object.assign(allHtmls, htmls15); }
 
-  <!-- यहाँ हम सभी 5 (या अधिक) calc.js फाइलों को जोड़ेंगे -->
-  <script src="calc1.js"></script>
-  <script src="calc2.js"></script>
-  <script src="calc3.js"></script>
-  <script src="calc4.js"></script>
-  <script src="calc5.js"></script>
-  
-  <script>
-    // ==========================================
-    // DATA SETUP
-    // ==========================================
-    var allTools = [];
-    var allHtmls = {};
-    if(typeof tools1 !== 'undefined') { allTools = allTools.concat(tools1); Object.assign(allHtmls, htmls1); }
-    if(typeof tools2 !== 'undefined') { allTools = allTools.concat(tools2); Object.assign(allHtmls, htmls2); }
-    if(typeof tools3 !== 'undefined') { allTools = allTools.concat(tools3); Object.assign(allHtmls, htmls3); }
-    if(typeof tools4 !== 'undefined') { allTools = allTools.concat(tools4); Object.assign(allHtmls, htmls4); }
-    if(typeof tools5 !== 'undefined') { allTools = allTools.concat(tools5); Object.assign(allHtmls, htmls5); }// ==========================================
-// MENU & NAVIGATION LOGIC
-// ==========================================
-function toggleMenu() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sidebar-overlay').classList.toggle('open');
-}
-
-function hideAllPages() {
-  document.getElementById('page-home').classList.add('hidden');
-  document.getElementById('tool-display-area').style.display = 'none';
-  document.getElementById('page-about').style.display = 'none';
-  document.getElementById('page-contact').style.display = 'none';
-  document.getElementById('page-privacy').style.display = 'none';
-  document.getElementById('page-terms').style.display = 'none';
-}
-
-function showHome() {
-  hideAllPages();
-  document.getElementById('page-home').classList.remove('hidden');
-  window.scrollTo(0, 0);
-}
-
-function showPage(pageId) {
-  hideAllPages();
-  document.getElementById('page-' + pageId).style.display = 'block';
-  window.scrollTo(0, 0);
-}
-
-function showTool(toolId) {
-  hideAllPages();
-  document.getElementById('tool-display-area').style.display = 'block';
-  var t = allTools.find(function(x) { return x.id === toolId; });
-  if(t) {
-    document.getElementById('display-title').textContent = t.name;
-    document.getElementById('display-content').innerHTML = allHtmls[toolId];
+  // मेन्यू और पेज बदलने का लॉजिक
+  function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('open');
   }
-  window.scrollTo(0, 0);
-}
+  function hideAllPages() {
+    document.getElementById('page-home').classList.add('hidden');
+    document.getElementById('tool-display-area').style.display = 'none';
+    document.getElementById('page-about').style.display = 'none';
+    document.getElementById('page-contact').style.display = 'none';
+    document.getElementById('page-privacy').style.display = 'none';
+    document.getElementById('page-terms').style.display = 'none';
+  }
+  function showHome() {
+    hideAllPages();
+    document.getElementById('page-home').classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+  function showPage(pageId) {
+    hideAllPages();
+    document.getElementById('page-' + pageId).style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+  function showTool(toolId) {
+    hideAllPages();
+    document.getElementById('tool-display-area').style.display = 'block';
+    var t = allTools.find(function(x) { return x.id === toolId; });
+    if(t) {
+      document.getElementById('display-title').textContent = t.name;
+      document.getElementById('display-content').innerHTML = allHtmls[toolId];
+    }
+    window.scrollTo(0, 0);
+  }    // टूल्स की कैटेगरी
+    var categories = {
+      "Financial": { id: "financial", items: ["emi", "interest", "gst", "discount", "tip", "compound", "sip", "tax", "salary", "retire", "mortgage", "autoloan", "payment", "amortization", "investment", "inflation", "salestax", "vat", "roi", "margin"] },
+      "Health & Fitness": { id: "health", items: ["bmi", "age", "bodyfat", "bmr", "caldef", "water", "weightloss", "pregnancy", "bmikids"] },
+      "Math": { id: "math", items: ["percentage", "average", "gpa", "time", "random", "scientific", "fraction", "area", "volume", "quadratic", "pythagoras", "circumference", "stdev", "probability", "permcomb"] },
+      "Everyday Life": { id: "everyday", items: ["date-diff", "fuel", "electricity", "mileage", "currency"] },
+      "Physics & Engineering": { id: "physics", items: ["ohm", "speeddist", "force", "work", "density", "molar", "concrete", "paint", "tile"] },
+      "Basic Tools": { id: "basic", items: ["simplecalc"] }
+    };
 
-// ==========================================
-// TOOLS LIST GENERATION
-// ==========================================
-var categories = {
-  "Financial": { id: "financial", items: ["emi", "interest", "gst", "discount", "tip", "compound", "sip", "tax", "salary", "retire", "mortgage", "autoloan", "payment", "amortization", "investment", "inflation", "salestax", "vat", "roi", "margin"] },
-  "Health & Fitness": { id: "health", items: ["bmi", "age", "bodyfat", "bmr", "caldef", "water", "weightloss", "pregnancy", "bmikids"] },
-  "Math": { id: "math", items: ["percentage", "average", "gpa", "time", "random", "scientific", "fraction", "area", "volume", "quadratic", "pythagoras", "circumference", "stdev", "probability", "permcomb"] },
-  "Everyday Life": { id: "everyday", items: ["date-diff", "fuel", "electricity", "mileage", "currency"] },
-  "Physics & Engineering": { id: "physics", items: ["ohm", "speeddist", "force", "work", "density", "molar", "concrete", "paint", "tile"] },
-  "Basic Tools": { id: "basic", items: ["simplecalc"] }
-};
+    // टूल्स की लिस्ट बनाना
+    document.addEventListener('DOMContentLoaded', function() {
+      var catList = document.getElementById('category-list');
+      for (var catName in categories) {
+        var catObj = categories[catName];
+        var header = document.createElement('div');
+        header.className = 'category-header';
+        header.id = catObj.id;
+        header.textContent = catName;
+        catList.appendChild(header);
 
-document.addEventListener('DOMContentLoaded', function() {
-  var catList = document.getElementById('category-list');
-  for (var catName in categories) {
-    var catObj = categories[catName];
-    var header = document.createElement('div');
-    header.className = 'category-header';
-    header.id = catObj.id;
-    header.textContent = catName;
-    catList.appendChild(header);
+        var listDiv = document.createElement('div');
+        listDiv.className = 'tool-list';
+        
+        for (var i = 0; i < catObj.items.length; i++) {
+          var id = catObj.items[i];
+          var t = allTools.find(function(x) { return x.id === id; });
+          if (t) {
+            var a = document.createElement('a');
+            a.href = "javascript:void(0)";
+            a.textContent = t.name;
+            a.onclick = (function(toolId) {
+              return function() { showTool(toolId); };
+            })(t.id);
+            listDiv.appendChild(a);
+          }
+        }
+        catList.appendChild(listDiv);
+      }
+      loadHistory();
+    });
 
-    var listDiv = document.createElement('div');
-    listDiv.className = 'tool-list';
-    
-    for (var i = 0; i < catObj.items.length; i++) {
-      var id = catObj.items[i];
-      var t = allTools.find(function(x) { return x.id === id; });
-      if (t) {
-        var a = document.createElement('a');
-        a.href = "javascript:void(0)";
-        a.textContent = t.name;
-        a.onclick = (function(toolId) {
-          return function() { showTool(toolId); };
-        })(t.id);
-        listDiv.appendChild(a);
+    // सर्च फंक्शन
+    function searchTools() {
+      var input = document.getElementById('toolSearch').value.toLowerCase();
+      var results = document.getElementById('searchResults');
+      results.innerHTML = '';
+      if (input === '') { results.style.display = 'none'; return; }
+      var matches = allTools.filter(function(t) { return t.name.toLowerCase().indexOf(input) !== -1; });
+      if (matches.length === 0) { results.innerHTML = '<li><a>No tools found</a></li>'; } 
+      else {
+        for (var i = 0; i < matches.length; i++) {
+          var t = matches[i];
+          var li = document.createElement('li');
+          li.innerHTML = '<a onclick="showTool(\'' + t.id + '\')">' + t.name + '</a>';
+          results.appendChild(li);
+        }
+      }
+      results.style.display = 'block';
+    }
+    function hideSearch() { document.getElementById('searchResults').style.display = 'none'; }
+
+    // ==========================================
+    // CALCULATOR ENGINE (Basic & Scientific)
+    // ==========================================
+    var calcExpr = "0"; 
+    var displayStr = "0"; 
+    var lastAns = 0;
+    var memVal = 0;
+
+    function switchTab(type) {
+      document.getElementById('tab-basic').classList.remove('active');
+      document.getElementById('tab-scientific').classList.remove('active');
+      if(type === 'basic') {
+        document.getElementById('tab-basic').classList.add('active');
+        document.getElementById('pad-scientific').classList.remove('active');
+      } else {
+        document.getElementById('tab-scientific').classList.add('active');
+        document.getElementById('pad-scientific').classList.add('active');
       }
     }
-    catList.appendChild(listDiv);
-  }
-  loadHistory();
-});
+    function updateDisplay() {
+      document.getElementById('calc-display').textContent = displayStr;
+    }
+    function calcInput(val) {
+      if (displayStr === "0" && val !== "." && val !== "+" && val !== "-" && val !== "*" && val !== "/") {
+        displayStr = ""; calcExpr = "";
+      }
+      if (val === 'ans') { displayStr += lastAns; calcExpr += lastAns; }
+      else if (val === 'm+') { memVal = lastAns; return; }
+      else if (val === 'm-') { memVal = -lastAns; return; }
+      else if (val === 'mr') { displayStr += memVal; calcExpr += memVal; }
+      else if (val === 'rnd') { var r = Math.random().toFixed(4); displayStr += r; calcExpr += r; }
+      else if (val === 'exp') { displayStr += 'e'; calcExpr += 'e'; }
+      else if (val === '+/-') { displayStr = (-parseFloat(displayStr)).toString(); calcExpr = displayStr; }
+      else if (val === '*') { displayStr += '×'; calcExpr += '*'; }
+      else if (val === '/') { displayStr += '÷'; calcExpr += '/'; }
+      else { displayStr += val; calcExpr += val; }
+      updateDisplay();
+    }
+    function sciInput(val) {
+      if (val === 'π') { displayStr += 'π'; calcExpr += Math.PI; }
+      else if (val === 'e') { displayStr += 'e'; calcExpr += Math.E; }
+      else if (val === '^') { displayStr += '^'; calcExpr += '**'; }
+      else if (val === '^2') { displayStr += '²'; calcExpr += '**2'; }
+      else if (val === 'sqrt(') { displayStr += '√('; calcExpr += 'Math.sqrt('; }
+      else if (val === 'log(') { displayStr += 'log('; calcExpr += 'Math.log10('; }
+      else if (val === 'ln(') { displayStr += 'ln('; calcExpr += 'Math.log('; }
+      else if (val === 'sin(' || val === 'cos(' || val === 'tan(') {
+        displayStr += val; calcExpr += 'Math.' + val.replace('(', '') + '((Math.PI/180)*';
+      } else { displayStr += val; calcExpr += val; }
+      updateDisplay();
+    }
+    function calcClear() { calcExpr = "0"; displayStr = "0"; updateDisplay(); }
+    function calcBack() {
+      displayStr = displayStr.slice(0, -1);
+      if (displayStr === "") displayStr = "0";
+      calcExpr = displayStr.replace(/×/g, '*').replace(/÷/g, '/').replace(/π/g, Math.PI).replace(/√/g,'Math.sqrt');
+      updateDisplay();
+    }
+    function calcCalculate() {
+      try {
+        var openBrackets = (calcExpr.match(/\(/g) || []).length;
+        var closeBrackets = (calcExpr.match(/\)/g) || []).length;
+        for(var i=0; i < (openBrackets - closeBrackets); i++) { calcExpr += ')'; }
+        var result = eval(calcExpr);
+        if (result === Infinity || isNaN(result)) throw Error();
+        lastAns = result;
+        displayStr = result.toString();
+        calcExpr = result.toString();
+        updateDisplay();
+        saveHistory(displayStr);
+      } catch (e) {
+        displayStr = "Error"; updateDisplay(); calcExpr = "0";
+      }
+    }
 
-// ==========================================
+    // ==========================================
     // HISTORY LOGIC
     // ==========================================
     var historyData = [];
-
     function saveHistory(res) {
       if(res === "Error" || res === "0") return;
       historyData.unshift(res);
@@ -359,15 +457,10 @@ document.addEventListener('DOMContentLoaded', function() {
       localStorage.setItem("calcHistory", JSON.stringify(historyData));
       renderHistory();
     }
-
     function loadHistory() {
       var data = localStorage.getItem("calcHistory");
-      if(data) {
-        historyData = JSON.parse(data);
-        renderHistory();
-      }
+      if(data) { historyData = JSON.parse(data); renderHistory(); }
     }
-
     function renderHistory() {
       var box = document.getElementById('history-box');
       var list = document.getElementById('history-list');
@@ -387,76 +480,14 @@ document.addEventListener('DOMContentLoaded', function() {
           list.appendChild(li);
         }
       }
-    }  </script>
+    }
 
-  <!-- ================= FIREBASE SDK (For Real Sign In) ================= -->
-  <!-- 
-    ⚠️ ध्यान दें: नीचे दिए गए firebaseConfig में अपनी खुद की API Keys डालें।
-    Firebase Console (console.firebase.google.com) से अपना प्रोजेक्ट बनाकर 
-    अपनी keys यहाँ पेस्ट करें, तभी असली लॉगिन काम करेगा।
-  -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY_HERE",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    window.firebaseAuth = auth;
-
-    onAuthStateChanged(auth, (user) => {
-      var btn = document.querySelector('.signin-btn');
-      if (user) {
-        btn.textContent = "Hi, " + user.email.split('@')[0];
-        btn.style.background = "#10b981"; // Green color for logged in
-        btn.onclick = function() {
-          if(confirm("Do you want to log out?")) {
-            signOut(auth);
-          }
-        };
-      } else {
-        btn.textContent = "Sign In";
-        btn.style.background = "#fff";
-        btn.onclick = handleSignIn;
-      }
-    });
-
-    window.handleSignIn = function() {
-      if(firebaseConfig.apiKey === "YOUR_API_KEY_HERE") {
-        alert("Firebase Setup Pending:\nअसली लॉगिन के लिए कृपया कोड में अपनी Firebase API Keys डालें (Part 4 देखें)।");
-        return;
-      }
-      var email = prompt("Enter your Email ID:");
-      if(!email) return;
-      var password = prompt("Enter your Password (min 6 characters):");
-      if(!password) return;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          alert("Welcome back! Signed in as: " + userCredential.user.email);
-        })
-        .catch((error) => {
-          if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
-            createUserWithEmailAndPassword(auth, email, password)
-              .then((userCredential) => {
-                alert("New Account created & Signed in as: " + userCredential.user.email);
-              })
-              .catch((err) => {
-                alert("Error: " + err.message);
-              });
-          } else {
-            alert("Login Error: " + error.message);
-          }
-        });
-    };
+    // ==========================================
+    // FIREBASE / SIGN-IN (Placeholder)
+    // ==========================================
+    function handleSignIn() {
+      alert("Sign In feature coming soon! Currently, all tools are 100% free without login.");
+    }
   </script>
 </body>
 </html>
