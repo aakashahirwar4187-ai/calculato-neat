@@ -3,9 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>World Calculators - Free Online Tools & Calculators</title>
-  <meta name="description" content="Free online calculators for finance, health, math, and more. 100% accurate and easy to use. Calculate EMI, BMI, Age, and 100+ tools in your browser." />
+  <meta name="description" content="Free online calculators for finance, health, math, image, PDF, text, and more. 100% accurate and private. 100+ tools in your browser." />
+  
+  <!-- PDF Libraries -->
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if(typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
   
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -86,8 +94,8 @@
     
     .input-group { margin-bottom: 1rem; }
     .input-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.95rem; }
-    .input-group input, .input-group select { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; }
-    .btn { background: var(--primary-light); color: white; padding: 0.85rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; }
+    .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; }
+    .btn { background: var(--primary-light); color: white; padding: 0.85rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-bottom:0.5rem; }
     .btn:hover { background: var(--primary); }
     .result-box { display: none; margin-top: 1.5rem; padding: 1.5rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; text-align: center; }
     
@@ -121,6 +129,11 @@
     <a href="#financial" onclick="toggleMenu();">Financial Calculators</a>
     <a href="#health" onclick="toggleMenu();">Fitness & Health</a>
     <a href="#math" onclick="toggleMenu();">Math Calculators</a>
+    <a href="#everyday" onclick="toggleMenu();">Everyday Life</a>
+    <a href="#physics" onclick="toggleMenu();">Physics & Engineering</a>
+    <a href="#imagetools" onclick="toggleMenu();">Image Tools</a>
+    <a href="#pdftools" onclick="toggleMenu();">PDF Tools</a>
+    <a href="#texttools" onclick="toggleMenu();">Text Tools</a>
     <a href="#" onclick="showPage('about'); toggleMenu();">About Us</a>
     <a href="#" onclick="showPage('contact'); toggleMenu();">Contact Us</a>
     <a href="#" onclick="showPage('privacy'); toggleMenu();">Privacy Policy</a>
@@ -137,14 +150,12 @@
         
         <div class="calc-display" id="calc-display">0</div>
         
-        <!-- Scientific Pad -->
         <div class="calc-pad-scientific" id="pad-scientific">
           <button class="c-btn sci" onclick="sciInput('sin(')">sin</button>
           <button class="c-btn sci" onclick="sciInput('cos(')">cos</button>
           <button class="c-btn sci" onclick="sciInput('tan(')">tan</button>
           <button class="c-btn sci" onclick="sciInput('π')">π</button>
           <button class="c-btn sci" onclick="sciInput('e')">e</button>
-          
           <button class="c-btn sci" onclick="sciInput('^')">x^y</button>
           <button class="c-btn sci" onclick="sciInput('^2')">x²</button>
           <button class="c-btn sci" onclick="sciInput('sqrt(')">√x</button>
@@ -158,25 +169,21 @@
           <button class="c-btn" onclick="calcInput('9')">9</button>
           <button class="c-btn op" onclick="calcInput('+')">+</button>
           <button class="c-btn op" onclick="calcBack()">Back</button>
-
           <button class="c-btn" onclick="calcInput('4')">4</button>
           <button class="c-btn" onclick="calcInput('5')">5</button>
           <button class="c-btn" onclick="calcInput('6')">6</button>
           <button class="c-btn op" onclick="calcInput('-')">−</button>
           <button class="c-btn op" onclick="calcInput('ans')">Ans</button>
-
           <button class="c-btn" onclick="calcInput('1')">1</button>
           <button class="c-btn" onclick="calcInput('2')">2</button>
           <button class="c-btn" onclick="calcInput('3')">3</button>
           <button class="c-btn op" onclick="calcInput('*')">×</button>
           <button class="c-btn op" onclick="calcInput('m+')">M+</button>
-
           <button class="c-btn" onclick="calcInput('0')">0</button>
           <button class="c-btn" onclick="calcInput('.')">.</button>
           <button class="c-btn op" onclick="calcInput('exp')">EXP</button>
           <button class="c-btn op" onclick="calcInput('/')">/</button>
           <button class="c-btn op" onclick="calcInput('m-')">M-</button>
-
           <button class="c-btn op" onclick="calcInput('+/-')">±</button>
           <button class="c-btn op" onclick="calcInput('rnd')">RND</button>
           <button class="c-btn equal" onclick="calcClear()">AC</button>
@@ -241,7 +248,10 @@
     <p>By using this website, you agree to these terms.</p>
     <p>Our calculators are for informational purposes only. We are not responsible for any financial or health decisions made based on these results.</p>
   </div>
-</div><script src="calc1.js"></script>
+</div>
+
+<!-- ===== सभी 16 फाइलों के लिंक ===== -->
+<script src="calc1.js"></script>
 <script src="calc2.js"></script>
 <script src="calc3.js"></script>
 <script src="calc4.js"></script>
@@ -256,9 +266,10 @@
 <script src="calc13.js"></script>
 <script src="calc14.js"></script>
 <script src="calc15.js"></script>
-
-<script>
-  // डेटा इकट्ठा करना
+<script src="calc16.js"></script><script>
+  // ==========================================
+  // डेटा इकट्ठा करना (Data Setup)
+  // ==========================================
   var allTools = [];
   var allHtmls = {};
   if(typeof tools1 !== 'undefined') { allTools = allTools.concat(tools1); Object.assign(allHtmls, htmls1); }
@@ -276,12 +287,14 @@
   if(typeof tools13 !== 'undefined') { allTools = allTools.concat(tools13); Object.assign(allHtmls, htmls13); }
   if(typeof tools14 !== 'undefined') { allTools = allTools.concat(tools14); Object.assign(allHtmls, htmls14); }
   if(typeof tools15 !== 'undefined') { allTools = allTools.concat(tools15); Object.assign(allHtmls, htmls15); }
+  if(typeof tools16 !== 'undefined') { allTools = allTools.concat(tools16); Object.assign(allHtmls, htmls16); }
 
-  // मेन्यू और पेज बदलने का लॉजिक
+  // मेन्यू
   function toggleMenu() {
     document.getElementById('sidebar').classList.toggle('open');
     document.getElementById('sidebar-overlay').classList.toggle('open');
   }
+  
   function hideAllPages() {
     document.getElementById('page-home').classList.add('hidden');
     document.getElementById('tool-display-area').style.display = 'none';
@@ -290,16 +303,19 @@
     document.getElementById('page-privacy').style.display = 'none';
     document.getElementById('page-terms').style.display = 'none';
   }
+  
   function showHome() {
     hideAllPages();
     document.getElementById('page-home').classList.remove('hidden');
     window.scrollTo(0, 0);
   }
+  
   function showPage(pageId) {
     hideAllPages();
     document.getElementById('page-' + pageId).style.display = 'block';
     window.scrollTo(0, 0);
   }
+  
   function showTool(toolId) {
     hideAllPages();
     document.getElementById('tool-display-area').style.display = 'block';
@@ -309,70 +325,70 @@
       document.getElementById('display-content').innerHTML = allHtmls[toolId];
     }
     window.scrollTo(0, 0);
-  }    // टूल्स की कैटेगरी
-    var categories = {
-  "Financial": { id: "financial", items: ["emi", "interest", "gst", "discount", "tip", "compound", "sip", "tax", "salary", "retire", "mortgage", "autoloan", "payment", "amortization", "investment", "inflation", "salestax", "vat", "roi", "margin"] },
-  "Health & Fitness": { id: "health", items: ["bmi", "age", "bodyfat", "bmr", "caldef", "water", "weightloss", "pregnancy", "bmikids", "bodyfat_navy", "macro", "pace", "carbs", "healthyweight", "onerepmax", "protein", "tdee", "conception", "due_date"] },
-  "Math": { id: "math", items: ["percentage", "average", "gpa", "time", "random", "scientific", "fraction", "area", "volume", "quadratic", "pythagoras", "circumference", "stdev", "probability", "permcomb", "zscore", "ratio", "circle", "root", "gcf", "lcm", "rounding", "primefactor", "scinotation", "slope"] },
-  "Everyday Life": { id: "everyday", items: ["date-diff", "fuel", "electricity", "mileage", "currency", "roofing", "mulch", "windchill", "dewpoint", "timeduration", "dayofweek", "love", "gasmileage"] },
-  "Physics & Engineering": { id: "physics", items: ["ohm", "speeddist", "force", "work", "density", "molar", "concrete", "paint", "tile"] },
-  "Basic Tools": { id: "basic", items: ["simplecalc"] }
-};
+  }
 
-    // टूल्स की लिस्ट बनाना
-    document.addEventListener('DOMContentLoaded', function() {
-      var catList = document.getElementById('category-list');
-      for (var catName in categories) {
-        var catObj = categories[catName];
-        var header = document.createElement('div');
-        header.className = 'category-header';
-        header.id = catObj.id;
-        header.textContent = catName;
-        catList.appendChild(header);
+  // कैटेगरी
+  var categories = {
+    "Financial": { id: "financial", items: ["emi", "interest", "gst", "discount", "tip", "compound", "sip", "tax", "salary", "retire", "mortgage", "autoloan", "payment", "amortization", "investment", "inflation", "salestax", "vat", "roi", "margin"] },
+    "Health & Fitness": { id: "health", items: ["bmi", "age", "bodyfat", "bmr", "caldef", "water", "weightloss", "pregnancy", "bmikids", "bodyfat_navy", "macro", "pace", "carbs", "healthyweight", "onerepmax", "protein", "tdee", "conception", "due_date"] },
+    "Math": { id: "math", items: ["percentage", "average", "gpa", "time", "random", "scientific", "fraction", "area", "volume", "quadratic", "pythagoras", "circumference", "stdev", "probability", "permcomb", "zscore", "ratio", "circle", "root", "gcf", "lcm", "rounding", "primefactor", "scinotation", "slope", "matrix"] },
+    "Everyday Life": { id: "everyday", items: ["date-diff", "fuel", "electricity", "mileage", "currency", "roofing", "mulch", "windchill", "dewpoint", "timeduration", "dayofweek", "love", "gasmileage", "btu", "timecard", "shoesize", "mass", "speed", "molweight", "golf", "tiresize", "gravel", "heatindex", "daycounter", "hours", "grade", "dice", "height", "sqft", "timezone", "gdp", "convcalc", "password"] },
+    "Physics & Engineering": { id: "physics", items: ["ohm", "speeddist", "force", "work", "density", "molar", "concrete", "paint", "tile", "horsepower", "resistor", "bandwidth", "voltagedrop", "ohmslaw", "stair"] },
+    "Image Tools": { id: "imagetools", items: ["imagecompressor", "imageresizer", "imageconverter", "imagecropper", "imagerotator", "imagewatermark", "imagefilters", "transparentbg"] },
+    "PDF Tools": { id: "pdftools", items: ["mergepdf", "splitpdf", "jpgtopdf", "pdftojpg"] },
+    "Text Tools": { id: "texttools", items: ["wordcounter", "charcounter", "caseconverter", "removespaces", "removeduplicates", "sortlines", "reversetext", "textdiff", "loremipsum", "notepad"] },
+    "Basic Tools": { id: "basic", items: ["simplecalc"] }
+  };
 
-        var listDiv = document.createElement('div');
-        listDiv.className = 'tool-list';
-        
-        for (var i = 0; i < catObj.items.length; i++) {
-          var id = catObj.items[i];
-          var t = allTools.find(function(x) { return x.id === id; });
-          if (t) {
-            var a = document.createElement('a');
-            a.href = "javascript:void(0)";
-            a.textContent = t.name;
-            a.onclick = (function(toolId) {
-              return function() { showTool(toolId); };
-            })(t.id);
-            listDiv.appendChild(a);
-          }
-        }
-        catList.appendChild(listDiv);
-      }
-      loadHistory();
-    });
+  document.addEventListener('DOMContentLoaded', function() {
+    var catList = document.getElementById('category-list');
+    for (var catName in categories) {
+      var catObj = categories[catName];
+      var header = document.createElement('div');
+      header.className = 'category-header';
+      header.id = catObj.id;
+      header.textContent = catName;
+      catList.appendChild(header);
 
-    // सर्च फंक्शन
-    function searchTools() {
-      var input = document.getElementById('toolSearch').value.toLowerCase();
-      var results = document.getElementById('searchResults');
-      results.innerHTML = '';
-      if (input === '') { results.style.display = 'none'; return; }
-      var matches = allTools.filter(function(t) { return t.name.toLowerCase().indexOf(input) !== -1; });
-      if (matches.length === 0) { results.innerHTML = '<li><a>No tools found</a></li>'; } 
-      else {
-        for (var i = 0; i < matches.length; i++) {
-          var t = matches[i];
-          var li = document.createElement('li');
-          li.innerHTML = '<a onclick="showTool(\'' + t.id + '\')">' + t.name + '</a>';
-          results.appendChild(li);
+      var listDiv = document.createElement('div');
+      listDiv.className = 'tool-list';
+      
+      for (var i = 0; i < catObj.items.length; i++) {
+        var id = catObj.items[i];
+        var t = allTools.find(function(x) { return x.id === id; });
+        if (t) {
+          var a = document.createElement('a');
+          a.href = "javascript:void(0)";
+          a.textContent = t.name;
+          a.onclick = (function(toolId) {
+            return function() { showTool(toolId); };
+          })(t.id);
+          listDiv.appendChild(a);
         }
       }
-      results.style.display = 'block';
+      catList.appendChild(listDiv);
     }
-    function hideSearch() { document.getElementById('searchResults').style.display = 'none'; }
+    loadHistory();
+  });
 
-    // ==========================================
-    // CALCULATOR ENGINE (Basic & Scientific)
+  function searchTools() {
+    var input = document.getElementById('toolSearch').value.toLowerCase();
+    var results = document.getElementById('searchResults');
+    results.innerHTML = '';
+    if (input === '') { results.style.display = 'none'; return; }
+    var matches = allTools.filter(function(t) { return t.name.toLowerCase().indexOf(input) !== -1; });
+    if (matches.length === 0) { results.innerHTML = '<li><a>No tools found</a></li>'; } 
+    else {
+      for (var i = 0; i < matches.length; i++) {
+        var t = matches[i];
+        var li = document.createElement('li');
+        li.innerHTML = '<a onclick="showTool(\'' + t.id + '\')">' + t.name + '</a>';
+        results.appendChild(li);
+      }
+    }
+    results.style.display = 'block';
+  }    // ==========================================
+    // CALCULATOR ENGINE
     // ==========================================
     var calcExpr = "0"; 
     var displayStr = "0"; 
@@ -483,11 +499,12 @@
     }
 
     // ==========================================
-    // FIREBASE / SIGN-IN (Placeholder)
+    // SIGN IN PLACEHOLDER
     // ==========================================
     function handleSignIn() {
-      alert("Sign In feature coming soon! Currently, all tools are 100% free without login.");
+      alert("Sign In feature coming soon!\n\nअभी सभी टूल्स 100% मुफ्त और बिना लॉगिन के काम करते हैं।");
     }
   </script>
 </body>
 </html>
+  function hideSearch() { document.getElementById('searchResults').style.display = 'none'; }
